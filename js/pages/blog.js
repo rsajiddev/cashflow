@@ -35,7 +35,7 @@ export function renderBlog() {
       </div>
       <div class="blog-card__body"><div class="blog-card__category">${blog.category}</div><h3 class="blog-card__title">${blog.title}</h3><p class="blog-card__excerpt">${blog.description}</p><div class="blog-card__meta"><span>${todayLabel(blog.date)}</span><span>${blog.readTime}</span></div></div>
     </a>`).join('');
-  return `<section class="section blog-page"><div class="container"><div class="page-hero page-hero--center animate-in"><span class="section-label">Resources</span><h1 class="section-title">Invoice &amp; Business Blog</h1><p class="section-desc">Expert guides, tips and insights to help you manage invoicing and finances.</p></div><div class="blog-grid">${cardsHtml}</div></div></section>`;
+  return `<section class="section blog-page"><div class="container"><div class="page-hero page-hero--center animate-in"><span class="section-label">Resources</span><h1 class="section-title">Invoice &amp; Business Blog</h1><p class="section-desc">Practical guides to creating invoices, managing payments and cash flow, with clear advice on taxes, pricing, receipts, and everyday small-business finances. Make confident decisions as your business grows.</p></div><div class="blog-grid">${cardsHtml}</div></div></section>`;
 }
 
 /* Add a Cloudinary URL to a post's `image` field. Listing and detail views
@@ -427,8 +427,7 @@ export function renderBlogPost(slug) {
       <header class="blog-post__hero" ${heroImageStyle}>
         <div class="blog-post__hero-shade"></div>
         <div class="blog-post__hero-content">
-          <a href="#/blog" class="blog-post__back">← All guides</a>
-          <span class="blog-post__category">${metadata.category || post.category}</span>
+          <a href="#/blog" class="blog-post__back"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg><span>Back to all guides</span></a>
           <h1 class="blog-post__title">${displayTitle}</h1>
           <p class="blog-post__hero-description">${metadata.description}</p>
           <div class="blog-post__meta"><span>${publishedDate}</span><span aria-hidden="true">·</span><span>${metadata.readTime || post.readTime}</span></div>

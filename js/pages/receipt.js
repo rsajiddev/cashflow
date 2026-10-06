@@ -83,7 +83,7 @@ export function initReceiptPage() {
     if (window.html2pdf) {
       try {
         if (document.fonts?.ready) await document.fonts.ready;
-        await Promise.all([...preview.querySelectorAll('img')].map(image => image.decode?.().catch(() => {})));
+        await Promise.all([...preview.querySelectorAll('img')].map(image => image.decode?.().catch(() => { })));
         await window.html2pdf().set({
           margin: .45,
           filename: `receipt-${$('recNumber').value || 'draft'}.pdf`,

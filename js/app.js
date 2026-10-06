@@ -366,7 +366,9 @@ function openMobileMenu() {
     nav?.classList.add('active');
     overlay?.classList.add('active');
     toggle?.classList.add('active');
+    toggle?.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
+    document.getElementById('mobileNavClose')?.focus();
 }
 
 function closeMobileMenu() {
@@ -377,7 +379,9 @@ function closeMobileMenu() {
     nav?.classList.remove('active');
     overlay?.classList.remove('active');
     toggle?.classList.remove('active');
+    toggle?.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
+    toggle?.focus();
 }
 
 // ========== HEADER SCROLL EFFECT ==========
