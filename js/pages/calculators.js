@@ -1,9 +1,8 @@
 export function renderCalculatorsHub() {
   return `
     <section class="section">
-      <div class="container">
-        <h1 class="section-title">Free Invoice & Business Calculators</h1>
-        <p class="section-desc">Tools to help you manage your billing, payments, taxes, and pricing.</p>
+      <div class="container calculators-hub-container">
+        <div class="page-hero page-hero--center animate-in"><span class="section-label">CashHub tools</span><h1 class="section-title">Free Invoice &amp; Business Calculators</h1><p class="section-desc">Tools to help you manage billing, payments, taxes, pricing and cash flow.</p></div>
 
         <div class="calc-category">
           <div class="calc-category__header">

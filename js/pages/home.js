@@ -6,7 +6,7 @@ export function renderHome() {
         <div class="hero__decor" aria-hidden="true"><span class="hero-shape hero-shape--one">⌁</span><span class="hero-shape hero-shape--two">✦</span><span class="hero-shape hero-shape--three">◌</span><span class="hero-shape hero-shape--four">▱</span></div>
         <div class="hero__content animate-in">
           <div class="hero__badge">✨ 100% Free • No Sign Up Required</div>
-          <h1 class="hero__title">Create Professional <span class="hero-highlight"><span id="heroDocumentWord">Invoices</span></span> in Minutes</h1>
+          <h1 class="hero__title">Create Professional <span class="hero-highlight"><span id="heroDocumentWord">Invoice</span></span> in Minutes</h1>
           <p class="hero__subtitle">Generate beautiful invoices and receipts, calculate taxes & payments, and download PDFs — all without creating an account.</p>
           <div class="hero__actions">
             <a href="#/invoice" class="btn btn--primary btn--lg">Create Invoice</a>
@@ -165,10 +165,14 @@ export function renderHome() {
 
       <!-- CTA Section -->
       <section class="section">
-        <div class="cta-section animate-in" style="text-align: center; padding: 3rem 1rem; background: var(--bg-secondary, #eef2f5); border-radius: 8px;">
-          <h2>Ready to get started?</h2>
-          <p style="margin-bottom: 2rem;">Create your first professional invoice today.</p>
-          <a href="#/invoice" class="btn btn--primary btn--lg">Create Invoice Now</a>
+        <div class="cta-section home-cta animate-in">
+          <span class="section-label">Invoices &amp; receipts</span>
+          <h2>Ready to create your next document?</h2>
+          <p>Build a professional invoice or create a polished receipt in just a few steps.</p>
+          <div class="home-cta__actions">
+            <a href="#/invoice" class="btn btn--primary btn--lg">Create an Invoice</a>
+            <a href="#/receipt" class="btn btn--secondary btn--lg">Create a Receipt</a>
+          </div>
         </div>
       </section>
     </div>

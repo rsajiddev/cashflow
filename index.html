@@ -8,6 +8,16 @@
     <meta name="description"
         content="Create professional invoices, download PDFs, and use powerful financial calculators — all for free.">
 
+    <script>
+        (function () {
+            var savedTheme = localStorage.getItem('cashhub-theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            if (savedTheme === 'dark' || savedTheme === 'light') {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                document.documentElement.style.backgroundColor = savedTheme === 'dark' ? '#0B1120' : '#F8FAFC';
+            }
+        }());
+    </script>
+
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

@@ -37,6 +37,7 @@ function toggleTheme() {
     const newTheme = AppState.theme === 'light' ? 'dark' : 'light';
     AppState.theme = newTheme;
     document.documentElement.setAttribute('data-theme', newTheme);
+    document.documentElement.style.backgroundColor = newTheme === 'dark' ? '#0B1120' : '#F8FAFC';
     localStorage.setItem('cashhub-theme', newTheme);
 }
 
@@ -188,6 +189,7 @@ async function navigateTo(path) {
             });
             initScrollAnimations(mainContent);
             initCounters(mainContent);
+            initFaq(mainContent);
             if (page === 'home' || page === '') initHeroWord(mainContent);
         });
 
@@ -200,18 +202,53 @@ async function navigateTo(path) {
 function initHeroWord(root = document) {
     const word = root.querySelector('#heroDocumentWord');
     if (!word || word.dataset.rotating === 'true') return;
-    if (window.CashHub.heroInterval) window.clearInterval(window.CashHub.heroInterval);
+    if (window.CashHub.heroTimeout) window.clearTimeout(window.CashHub.heroTimeout);
     word.dataset.rotating = 'true';
-    const words = ['Invoices', 'Receipts'];
-    let index = 0;
-    window.CashHub.heroInterval = window.setInterval(() => {
-        word.classList.add('word-changing');
-        window.setTimeout(() => {
-            index = (index + 1) % words.length;
-            word.textContent = words[index];
-            word.classList.remove('word-changing');
-        }, 220);
-    }, 3200);
+    const words = ['Invoice', 'Receipt'];
+    let wordIndex = 0;
+    let characterIndex = 0;
+    let deleting = false;
+    const type = () => {
+        const activeWord = words[wordIndex];
+        if (!deleting) {
+            characterIndex += 1;
+            word.textContent = activeWord.slice(0, characterIndex);
+            if (characterIndex === activeWord.length) {
+                deleting = true;
+                window.CashHub.heroTimeout = window.setTimeout(type, 1300);
+                return;
+            }
+        } else {
+            characterIndex -= 1;
+            word.textContent = activeWord.slice(0, characterIndex);
+            if (characterIndex === 0) {
+                deleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+            }
+        }
+        window.CashHub.heroTimeout = window.setTimeout(type, deleting ? 75 : 125);
+    };
+    word.textContent = '';
+    type();
+}
+
+function initFaq(root = document) {
+    root.querySelectorAll('.faq-list details').forEach(details => {
+        const summary = details.querySelector('summary');
+        if (!summary || summary.dataset.bound === 'true') return;
+        summary.dataset.bound = 'true';
+        summary.addEventListener('click', event => {
+            event.preventDefault();
+            const opening = !details.classList.contains('is-open');
+            if (opening) {
+                details.open = true;
+                requestAnimationFrame(() => details.classList.add('is-open'));
+            } else {
+                details.classList.remove('is-open');
+                window.setTimeout(() => { details.open = false; }, 260);
+            }
+        });
+    });
 }
 
 function initScrollAnimations(root = document) {

@@ -277,12 +277,12 @@ export function renderInvoice() {
                             <span class="totals-value" id="previewSubtotal">$0.00</span>
                         </div>
                         <div class="totals-row">
-                            <span class="totals-label">Tax %: <input type="number" class="tax-input hide-in-pdf update-trigger" id="taxInput" value="0" min="0" step="0.1"> <span class="show-in-pdf-only" id="previewTaxRate">0%</span></span>
+                            <span class="totals-label totals-label--editable"><span>Tax %:</span><input type="number" class="tax-input hide-in-pdf update-trigger" id="taxInput" value="0" min="0" step="0.1"><span class="show-in-pdf-only" id="previewTaxRate">0%</span></span>
                             <span class="totals-value" id="previewTaxAmt">$0.00</span>
                         </div>
-                        <div class="totals-row">
+                        <div class="totals-row discount-row">
                             <span class="totals-label">Discount:</span>
-                            <span class="totals-value">-<span class="currency-symbol">$</span><input type="number" class="discount-input hide-in-pdf update-trigger" id="discountInput" value="0" min="0" step="0.01"> <span class="show-in-pdf-only" id="previewDiscountAmt">0.00</span></span>
+                            <span class="totals-value discount-value">-<span class="currency-symbol">$</span><input type="number" class="discount-input hide-in-pdf update-trigger" id="discountInput" value="0" min="0" step="0.01"> <span class="show-in-pdf-only" id="previewDiscountAmt">0.00</span></span>
                         </div>
                         <div class="totals-row grand-total">
                             <span class="totals-label">Total:</span>
