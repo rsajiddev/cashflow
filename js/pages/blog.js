@@ -1,28 +1,45 @@
+const guide = (slug, title, description, category, image, faq, date) => ({
+  slug, title, description, category, image: `https://images.unsplash.com/${image}?auto=format&fit=crop&w=1200&q=85`,
+  date, readTime: '6 min read', faq
+});
+
+// Eighteen distinct guides mapped from the three supplied reference groups.
 const blogPosts = [
-  { slug: 'invoicing-best-practices', title: 'How to Get Paid Faster', category: 'CASH FLOW', excerpt: 'Learn practical ways to reduce late invoice payments, improve payment terms and protect your cash flow.', readTime: '18 min read', imageUrl: 'https://images.unsplash.com/photo-1554224155-6726b3ff858?auto=format&fit=crop&w=900&q=80' },
-  { slug: 'tax-tips', title: 'Accept Online Payments', category: 'PAYMENTS', excerpt: 'Compare modern payment methods, reduce friction and make it easier for customers to pay you.', readTime: '14 min read', imageUrl: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=900&q=80' },
-  { slug: 'late-payment-strategies', title: 'How to Reduce Late Payments', category: 'CASH FLOW', excerpt: 'Discover a practical follow-up system that helps customers pay on time without damaging relationships.', readTime: '18 min read', imageUrl: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=900&q=80' },
-  { slug: 'markup-vs-margin', title: 'Invoice Payment Terms', category: 'BUSINESS', excerpt: 'Understand Net 30, Net 15 and due-on-receipt terms and choose the right approach for your business.', readTime: '15 min read', imageUrl: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=80' },
-  { slug: 'freelancer-invoicing', title: 'Invoice Follow-Up', category: 'INVOICING', excerpt: 'Build a professional invoice follow-up process with useful timing, wording and workflow guidance.', readTime: '19 min read', imageUrl: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80' },
-  { slug: 'payment-terms-explained', title: 'Invoice Late Fees', category: 'BUSINESS', excerpt: 'Learn how to communicate late fees fairly, calculate them clearly and preserve client trust.', readTime: '12 min read', imageUrl: 'https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=900&q=80' }
+  guide('days-sales-outstanding', 'Days Sales Outstanding', 'Understand the DSO formula, what a healthy result means for your business and practical ways to collect sooner.', 'CASH FLOW', 'photo-1486406146926-c627a92ad1ab', [['What does DSO measure?', 'Days Sales Outstanding estimates the average number of days between a credit sale and receiving payment.'], ['How is DSO calculated?', 'A common calculation is average accounts receivable divided by net credit sales, multiplied by the number of days in the period. Use consistent figures.'], ['Is a lower DSO always better?', 'Usually it indicates faster collection, but interpret it alongside customer terms, seasonality and the nature of your sales.']], '2026-10-05'),
+  guide('accounts-receivable-turnover', 'Accounts Receivable Turnover', 'Learn what the receivables turnover ratio reveals about collection efficiency and how to read it in context.', 'CASH FLOW', 'photo-1454165804606-c3d57bc86b40', [['What is receivables turnover?', 'It estimates how often a business collects its average receivables during a period.'], ['How do I calculate the ratio?', 'Divide net credit sales by average accounts receivable for the same period. Use comparable periods when tracking changes.'], ['What is a good turnover ratio?', 'There is no universal target; compare with your own history, payment terms and relevant industry benchmarks.']], '2026-10-04'),
+  guide('cash-application', 'Cash Application', 'A practical overview of matching incoming customer payments to the right invoices accurately and promptly.', 'PAYMENTS', 'photo-1554224155-6726b3ff858f', [['What is cash application?', 'It is the process of identifying a received payment and allocating it to the relevant customer account and open invoice.'], ['Why do payments become unapplied?', 'Remittance details may be missing, references may be incorrect, or a single transfer may cover several invoices.'], ['How can teams improve the process?', 'Request clear payment references, reconcile regularly and keep an exception queue for payments that need investigation.']], '2026-10-03'),
+  guide('payment-reconciliation', 'Payment Reconciliation', 'Use a repeatable reconciliation routine to match invoices, payment records and bank activity.', 'PAYMENTS', 'photo-1556761175-b413da4baf72', [['What does payment reconciliation involve?', 'It compares expected payments and invoice records with transactions recorded by a bank or payment provider.'], ['How often should I reconcile?', 'Set a cadence suited to transaction volume; frequent checks make exceptions easier to investigate.'], ['What should I do with a mismatch?', 'Check references, fees, timing and partial payments, then document the adjustment rather than forcing an unexplained match.']], '2026-10-02'),
+  guide('invoice-disputes', 'Invoice Disputes', 'Resolve billing disagreements with a clear evidence trail, constructive communication and a consistent process.', 'CUSTOMER RELATIONS', 'photo-1521737711867-e3b97375f902', [['What should I do when a client disputes an invoice?', 'Acknowledge the concern, ask which line or term is in question, and compare it with the agreed scope and delivery evidence.'], ['Should I pause collection activity?', 'Keep communication proportionate and follow the contract and local requirements while the issue is reviewed.'], ['How can disputes be prevented?', 'Confirm scope, rates, milestones and change approvals in writing before work begins.']], '2026-10-01'),
+  guide('working-capital', 'Working Capital', 'Explore the cash available for day-to-day operations and how billing and collection habits affect it.', 'FINANCE', 'photo-1497366754035-f200968a6e72', [['What is working capital?', 'A common measure is current assets minus current liabilities; it indicates short-term operating liquidity.'], ['How can invoicing affect it?', 'Clear billing milestones and timely follow-up can reduce the time money remains tied up in receivables.'], ['Is more working capital always better?', 'Adequate liquidity matters, but unused cash and excessive stock can also have costs. Review the full operating cycle.']], '2026-09-30'),
+  guide('recurring-invoices', 'Recurring Invoices', 'Set up predictable recurring billing with transparent schedules, accurate records and a plan for changes.', 'CLIENT BILLING', 'photo-1460925895917-afdab827c52f', [['When should I use recurring invoices?', 'They suit ongoing services, subscriptions or retainers with agreed regular charges.'], ['What details should recur?', 'Carry forward the agreed description and schedule, but verify dates, quantities, rates and tax treatment for each period.'], ['How should changes be handled?', 'Record the customer’s approval and update future billing rather than silently changing an established amount.']], '2026-09-29'),
+  guide('customer-statements', 'Customer Statements', 'Learn what a customer statement shows, when to send one and how it complements individual invoices.', 'CLIENT BILLING', 'photo-1554224154-26032ffc0d07', [['What is a customer statement?', 'It summarises account activity over a period, including invoices, credits, payments and any outstanding balance.'], ['Is a statement the same as an invoice?', 'No. A statement summarises an account; an invoice requests payment for a particular transaction.'], ['When should I send statements?', 'Many businesses send them on a regular schedule or when a customer needs a consolidated view of their account.']], '2026-09-28'),
+  guide('invoice-deposits', 'Invoice Deposits', 'Plan deposits and staged payments so both parties understand what is due before work starts.', 'CLIENT BILLING', 'photo-1521791136064-7986c2920216', [['When is a deposit useful?', 'It can secure a booking, cover agreed upfront costs or reduce exposure on a substantial project.'], ['What should a deposit invoice state?', 'Identify the project, amount, due date, what the deposit covers and how it relates to the final balance.'], ['Are deposits refundable?', 'That depends on the agreement and applicable law; state the terms clearly and get appropriate advice.']], '2026-09-27'),
+  guide('progress-invoicing', 'Progress Invoicing', 'Break larger projects into documented billing milestones that track work completed and payments due.', 'CLIENT BILLING', 'photo-1504307651254-35680f356dfd', [['What is progress invoicing?', 'It bills a project in stages rather than waiting until all work is complete.'], ['How should milestones be set?', 'Tie them to clear deliverables, dates or measurable completion points agreed with the customer.'], ['How do I avoid overbilling?', 'Track prior invoices and payments, show the current milestone and make the remaining contract balance clear.']], '2026-09-26'),
+  guide('payment-plans', 'Payment Plans', 'Structure agreed instalments with clear dates, amounts and a simple way to track what remains outstanding.', 'CLIENT BILLING', 'photo-1554224155-8d04cb21cd6c', [['What should a payment plan include?', 'Set out each instalment amount, due date, payment method and how missed or early payments are handled.'], ['Should the schedule be on the invoice?', 'Include or attach a clear schedule and refer to the agreement so the customer can see the full commitment.'], ['Can a plan be changed?', 'Document any mutually agreed revision and update your receivables records.']], '2026-09-25'),
+  guide('retainer-agreements', 'Retainer Agreements', 'Understand how retainers define ongoing availability, included work and billing expectations for both sides.', 'CLIENT BILLING', 'photo-1521737711867-e3b97375f902', [['What is a retainer?', 'It is an arrangement for ongoing access to services or reserved capacity, usually for a recurring fee.'], ['What should the agreement clarify?', 'Define scope, availability, unused hours or capacity, payment dates and how extra work is approved.'], ['Should retainers be invoiced regularly?', 'Yes, invoice according to the agreed schedule and describe the period or service covered.']], '2026-09-24'),
+  guide('credit-memo-vs-credit-note', 'Credit Memo vs. Credit Note', 'Compare the regional terms and learn when a credit document can correct or adjust an invoice.', 'DOCUMENTS', 'photo-1450101499163-c8848c66ca85', [['Are credit memos and credit notes different?', 'They often refer to the same type of document, though terminology varies by region and accounting system.'], ['When might I issue one?', 'For an agreed return, billing correction, discount or other adjustment to a previously issued invoice.'], ['Should it refer to the original invoice?', 'Yes. Include a clear reference and reason, and follow local tax and record-keeping rules.']], '2026-09-23'),
+  guide('purchase-order', 'Purchase Order', 'A straightforward guide to purchase orders, their approval role and the details suppliers should check.', 'PROCUREMENT', 'photo-1586528116311-ad8dd3c8310d', [['What is a purchase order?', 'It is a buyer-issued document that records an authorised request to purchase specified goods or services.'], ['What details does it usually contain?', 'Items, quantities, agreed prices, delivery information, buyer details and an order reference.'], ['Does a purchase order guarantee payment?', 'It documents an order but does not replace the contract, delivery evidence or invoice terms.']], '2026-09-22'),
+  guide('purchase-order-vs-invoice', 'Purchase Order vs. Invoice', 'See how a buyer’s order document differs from a seller’s request for payment in the purchasing workflow.', 'PROCUREMENT', 'photo-1556742049-0cfed4f6a45d', [['Who issues a purchase order?', 'The buyer usually issues it to authorise and describe a planned purchase.'], ['Who issues an invoice?', 'The supplier issues an invoice to request payment for goods or services supplied under the agreement.'], ['Should the two documents be matched?', 'Yes. Matching order, delivery and invoice details helps identify discrepancies before payment.']], '2026-09-21'),
+  guide('receipt', 'Receipt', 'Learn what a receipt confirms, which details to include and how it differs from an invoice.', 'RECEIPTS', 'photo-1554224155-6726b3ff858f', [['What does a receipt prove?', 'It records that a payment was received, including the amount, date and transaction context.'], ['Is a receipt the same as an invoice?', 'No. An invoice requests payment; a receipt confirms payment has been made.'], ['What should a receipt include?', 'A unique reference, seller and customer details where appropriate, items, total, payment method and date.']], '2026-09-20'),
+  guide('commercial-invoice', 'Commercial Invoice', 'Review the core information commonly needed on a commercial invoice for an international goods shipment.', 'INTERNATIONAL TRADE', 'photo-1494412519320-aa613dfb7738', [['What is a commercial invoice?', 'It is a seller-issued document describing an international goods transaction for customs and trade purposes.'], ['What information is commonly required?', 'Parties, goods descriptions, quantities, values, origin and shipment details; exact requirements vary.'], ['Can an ordinary invoice replace it?', 'Not always. Check the destination and carrier requirements, and seek specialist advice for complex shipments.']], '2026-09-19'),
+  guide('pro-forma-invoice', 'Pro Forma Invoice', 'Understand how a pro forma invoice communicates an expected transaction before final supply or payment.', 'INTERNATIONAL TRADE', 'photo-1520607162513-77705c0f0d4a', [['Is a pro forma invoice a final invoice?', 'Usually not; it is a preliminary document showing expected charges and terms before the final transaction.'], ['When is it useful?', 'It can help a buyer review expected costs or support preliminary shipping and import arrangements.'], ['Does it request payment?', 'It is generally informational; issue a proper invoice when payment is due under the agreed process.']], '2026-09-18')
 ];
 
-const todayLabel = () => new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date());
+const todayLabel = value => new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(value ? new Date(value) : new Date());
 
 export function renderBlog() {
   const cardsHtml = blogPosts.map(blog => `
     <a href="#/blog/${blog.slug}" class="blog-card animate-in">
-      <div class="blog-card__image" style="--blog-image: url('${blog.imageUrl}')">
-        ${blog.imageUrl ? `<img src="${blog.imageUrl}" alt="${blog.title}" loading="lazy">` : '<span aria-hidden="true">✦</span>'}
+      <div class="blog-card__image">
+        ${blog.image ? `<img src="${blog.image}" alt="${blog.title}" loading="lazy">` : '<span aria-hidden="true">✦</span>'}
       </div>
-      <div class="blog-card__body"><div class="blog-card__category">${blog.category}</div><h3 class="blog-card__title">${blog.title}</h3><p class="blog-card__excerpt">${blog.excerpt}</p><div class="blog-card__meta"><span>${todayLabel()}</span><span>${blog.readTime}</span></div></div>
+      <div class="blog-card__body"><div class="blog-card__category">${blog.category}</div><h3 class="blog-card__title">${blog.title}</h3><p class="blog-card__excerpt">${blog.description}</p><div class="blog-card__meta"><span>${todayLabel(blog.date)}</span><span>${blog.readTime}</span></div></div>
     </a>`).join('');
   return `<section class="section blog-page"><div class="container"><div class="page-hero page-hero--center animate-in"><span class="section-label">Resources</span><h1 class="section-title">Invoice &amp; Business Blog</h1><p class="section-desc">Expert guides, tips and insights to help you manage invoicing and finances.</p></div><div class="blog-grid">${cardsHtml}</div></div></section>`;
 }
 
-/* Blog card data intentionally keeps imageUrl empty. Paste a Cloudinary URL into
-   the relevant imageUrl field and the card automatically renders it. */
-/* Legacy post content below is preserved, but the page shell is theme-aware. */
+/* Add a Cloudinary URL to a post's `image` field. Listing and detail views
+   automatically use the same image; leave it empty for the themed fallback. */
 /* eslint-disable no-unused-vars */
 export function renderBlogLegacy() {
   const blogs = [
@@ -127,6 +144,26 @@ export function renderBlogLegacy() {
   `;
 }
 
+function createGuideContent(guide) {
+  return `
+    <p class="lead">${guide.description} This guide explains the key ideas, the records to keep and a practical way to apply them in day-to-day operations.</p>
+    <h2 id="article-section-1">What ${guide.title} means</h2>
+    <p>Start by agreeing what the document or process is intended to achieve, who is responsible for each step and which records provide evidence. Clear definitions help colleagues and customers interpret the same information consistently. Keep the terminology used in your systems aligned with the wording in contracts, orders and customer communications.</p>
+    <p>The exact requirements can vary by industry, country and transaction. Treat the steps below as a practical workflow, then confirm legal, tax or accounting obligations with an appropriately qualified adviser where needed.</p>
+    <h2 id="article-section-2">A practical workflow</h2>
+    <ol>
+      <li><strong>Confirm the source information.</strong> Check names, references, agreed scope, dates, quantities and amounts against the original records.</li>
+      <li><strong>Make the next action explicit.</strong> State what is due, who should act and by when. Avoid relying on assumptions or unexplained abbreviations.</li>
+      <li><strong>Keep a clear audit trail.</strong> Save approvals, revisions, supporting documents and payment updates together so the history can be followed later.</li>
+      <li><strong>Review exceptions promptly.</strong> Investigate missing information, mismatches or disputed items before they become harder to resolve.</li>
+    </ol>
+    <h2 id="article-section-3">Example and common pitfalls</h2>
+    <p>For example, a small business can use a consistent reference across the customer request, delivery record and billing document. If a quantity or date differs, the team can pause that item, check the approval and correct the record before sending a reminder or closing the period. This simple control reduces avoidable back-and-forth.</p>
+    <p>Common problems include copying old details without checking them, leaving responsibilities unclear, changing agreed terms informally and keeping no record of a correction. A short checklist and a regular review are usually more reliable than trying to reconstruct events from memory.</p>
+    <h2 id="article-section-4">Conclusion</h2>
+    <p>${guide.title} works best as part of a clear, documented process. Set expectations early, use accurate information, communicate in plain language and review exceptions consistently. Adapt the workflow to your organisation and verify jurisdiction-specific requirements before relying on it for compliance decisions.</p>`;
+}
+
 export function renderBlogPost(slug) {
   const posts = {
     'invoicing-best-practices': {
@@ -138,7 +175,7 @@ export function renderBlogPost(slug) {
         <p class="lead" style="font-size: 1.25rem; color: #555; line-height: 1.8; margin-bottom: 2rem;">Invoicing is the lifeblood of any modern business. In 2026, the landscape of payments has shifted drastically towards automation and instantaneous transfers, but the core principles of a good invoice remain the same. If your invoices are confusing, late, or lacking key details, you are slowing down your own cash flow. In this guide, we dive deep into the essential elements of a professional invoice and exactly how you can ensure you get paid on time, every time.</p>
 
         <h2 style="font-size: 1.8rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #222;">1. The Anatomy of a Perfect Invoice</h2>
-        <p style="margin-bottom: 1.5rem; line-height: 1.7; color: #444;">A professional invoice leaves no room for ambiguity. Your client should immediately recognize who it is from, what it is for, and how to pay it. Every invoice must include:</p>
+        <p style="margin-bottom: 1.5rem; line-height: 1.7; color: #444;">A professional invoice leaves no room for ambiguity. Your client should immediately recognise who it is from, what it is for, and how to pay it. Every invoice must include:</p>
         <ul style="margin-bottom: 2rem; padding-left: 1.5rem; line-height: 1.7; color: #444;">
           <li style="margin-bottom: 0.5rem;"><strong>Clear Header:</strong> The word "INVOICE" should be highly visible, along with your company logo and contact details.</li>
           <li style="margin-bottom: 0.5rem;"><strong>Unique Invoice Number:</strong> Essential for tracking and accounting purposes. Ensure a sequential numbering system.</li>
@@ -146,14 +183,14 @@ export function renderBlogPost(slug) {
           <li style="margin-bottom: 0.5rem;"><strong>Itemized Description:</strong> Break down the goods or services provided. Avoid generic terms like "Consulting services" – instead, use "Financial consulting for Q3 structural changes, 40 hours."</li>
         </ul>
 
-        <h2 style="font-size: 1.8rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #222;">2. Leverage Clear and Direct Payment Terms</h2>
+        <h2 style="font-size: 1.8rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #222;">2. Use Clear and Direct Payment Terms</h2>
         <p style="margin-bottom: 1.5rem; line-height: 1.7; color: #444;">Never leave your payment deadline open to interpretation. "Payment due upon receipt" sounds urgent, but it lacks a concrete date, which often causes accounting departments to push it to their next payment cycle.</p>
         
         <blockquote style="margin: 2rem 0; padding: 1.5rem 2rem; background: #f8f9fa; border-left: 4px solid #4361ee; font-size: 1.2rem; font-style: italic; color: #333;">
           "The fastest way to improve cash flow isn't finding more clients—it's tightening the payment terms for the ones you already have."
         </blockquote>
 
-        <p style="margin-bottom: 1.5rem; line-height: 1.7; color: #444;">Instead, use explicit dates like "Due on October 15, 2026." Familiarize your clients with standard terms such as Net 15 or Net 30, and clearly outline the consequences of late payments, such as a 1.5% monthly late fee.</p>
+        <p style="margin-bottom: 1.5rem; line-height: 1.7; color: #444;">Instead, use explicit dates such as "Due on 15 October 2026." Familiarise your clients with standard terms such as Net 15 or Net 30, and clearly outline any agreed late-payment consequences.</p>
 
         <h2 style="font-size: 1.8rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #222;">3. Offer Frictionless Payment Options</h2>
         <p style="margin-bottom: 1.5rem; line-height: 1.7; color: #444;">In 2026, mailing checks is a relic of the past. To get paid instantly, you must reduce the friction between your client receiving the invoice and sending the funds. Provide multiple modern payment gateways:</p>
@@ -186,7 +223,7 @@ export function renderBlogPost(slug) {
         </ul>
 
         <h2 style="font-size: 1.8rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #222;">2. Value Added Tax (VAT)</h2>
-        <p style="margin-bottom: 1.5rem; line-height: 1.7; color: #444;">VAT is utilized by the European Union, the UK, and over 160 other countries worldwide. Unlike US Sales Tax, VAT is collected at every stage of the supply chain.</p>
+        <p style="margin-bottom: 1.5rem; line-height: 1.7; color: #444;">VAT is used in the UK, the European Union and many other countries. Unlike US sales tax, VAT is generally collected at multiple stages of the supply chain, subject to local rules.</p>
         
         <blockquote style="margin: 2rem 0; padding: 1.5rem 2rem; background: #f8f9fa; border-left: 4px solid #4361ee; font-size: 1.2rem; font-style: italic; color: #333;">
           "The biggest mistake a global digital seller makes is ignoring their VAT liabilities until they receive an unexpected bill from a foreign government."
@@ -303,16 +340,16 @@ export function renderBlogPost(slug) {
       date: 'Sep 3, 2026',
       readTime: '9 min read',
       content: `
-        <p class="lead" style="font-size: 1.25rem; color: #555; line-height: 1.8; margin-bottom: 2rem;">As a freelancer, your invoice is often the final touchpoint you have with a client. It represents your brand's professionalism, organization, and value. A sloppy Word document invoice looks amateurish and often leads to delayed payments as clients prioritize more "established" vendors. This guide covers how to build the ultimate freelance invoice.</p>
+        <p class="lead" style="font-size: 1.25rem; color: #555; line-height: 1.8; margin-bottom: 2rem;">As a freelancer, your invoice is often the final touchpoint you have with a client. It represents your brand's professionalism, organisation and value. An unclear document can lead to questions or delayed payments. This guide covers how to build a polished freelance invoice.</p>
 
         <h2 style="font-size: 1.8rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #222;">1. Brand Your Invoices</h2>
-        <p style="margin-bottom: 1.5rem; line-height: 1.7; color: #444;">An invoice is a branding opportunity. It should match the aesthetic of your portfolio website or proposal documents. Include your logo, utilize your brand colors in the headers, and select a clean, professional typography. A polished visual identity communicates that you are a serious business entity, not just a casual gig worker.</p>
+        <p style="margin-bottom: 1.5rem; line-height: 1.7; color: #444;">An invoice is a branding opportunity. It should complement your portfolio website or proposal documents. Include your logo, use your brand colours in the headings, and select clear, professional typography. A consistent visual identity signals care and reliability.</p>
 
         <h2 style="font-size: 1.8rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #222;">2. Itemize with Value in Mind</h2>
         <p style="margin-bottom: 1.5rem; line-height: 1.7; color: #444;">When breaking down your services, do not just list arbitrary time entries. If a client sees "Writing - 10 hours," they may scrutinize the time spent. Instead, itemize by value and deliverables.</p>
         <ul style="margin-bottom: 2rem; padding-left: 1.5rem; line-height: 1.7; color: #444;">
           <li style="margin-bottom: 0.5rem;"><strong>Weak:</strong> Logo Design - $1,000</li>
-          <li style="margin-bottom: 0.5rem;"><strong>Strong:</strong> Comprehensive Brand Identity Package (Includes 3 logo concepts, typography selection, color palette, and final vector assets) - $1,000</li>
+          <li style="margin-bottom: 0.5rem;"><strong>Strong:</strong> Comprehensive Brand Identity Package (includes three logo concepts, typography selection, a colour palette and final vector assets) — £1,000</li>
         </ul>
 
         <blockquote style="margin: 2rem 0; padding: 1.5rem 2rem; background: #f8f9fa; border-left: 4px solid #4361ee; font-size: 1.2rem; font-style: italic; color: #333;">
@@ -366,8 +403,9 @@ export function renderBlogPost(slug) {
   };
 
   const post = posts[slug];
+  const metadata = blogPosts.find(item => item.slug === slug);
 
-  if (!post) {
+  if (!metadata) {
     return `
       <div class="container" style="max-width: 800px; margin: 4rem auto; padding: 0 1.5rem; text-align: center;">
         <h2 style="margin-bottom: 1.5rem; color: #1a1a1a;">Blog post not found</h2>
@@ -376,28 +414,37 @@ export function renderBlogPost(slug) {
     `;
   }
 
+  const articleContent = post?.content || createGuideContent(metadata);
+  const displayTitle = metadata.title || post.title;
+  const publishedDate = todayLabel(metadata.date || post.date);
+  const heroImageStyle = metadata.image ? `style="--blog-hero-image: url('${metadata.image}')"` : '';
+  const tocItems = [...articleContent.matchAll(/<h2(?:\s+id="([^"]+)")?[^>]*>(.*?)<\/h2>/g)]
+    .map((match, index) => ({ id: match[1] || `article-section-${index + 1}`, title: match[2].replace(/<[^>]+>/g, '') }));
+  const faqSectionId = `article-section-${tocItems.length + 1}`;
+  const tocHtml = [...tocItems, { id: faqSectionId, title: 'Frequently asked questions' }].map((item, index) => `<a href="#${item.id}"><span>${String(index + 1).padStart(2, '0')}</span>${item.title}</a>`).join('');
   return `
     <article class="blog-post animate-in">
-      <a href="#/blog" class="blog-post__back">← Back to Blog</a>
-      <div class="blog-post__category">${post.category}</div>
-      <h1 class="blog-post__title">${post.title}</h1>
-      <div class="blog-post__meta">
-        <span>${post.date}</span>
-        <span style="display: inline-block; width: 4px; height: 4px; background: #ccc; border-radius: 50%;"></span>
-        <span>${post.readTime}</span>
+      <header class="blog-post__hero" ${heroImageStyle}>
+        <div class="blog-post__hero-shade"></div>
+        <div class="blog-post__hero-content">
+          <a href="#/blog" class="blog-post__back">← All guides</a>
+          <span class="blog-post__category">${metadata.category || post.category}</span>
+          <h1 class="blog-post__title">${displayTitle}</h1>
+          <p class="blog-post__hero-description">${metadata.description}</p>
+          <div class="blog-post__meta"><span>${publishedDate}</span><span aria-hidden="true">·</span><span>${metadata.readTime || post.readTime}</span></div>
+        </div>
+      </header>
+      <div class="blog-post__layout">
+        <main class="blog-post__body">
+          <div class="blog-post__content">${articleContent}
+          <section class="blog-faq"><span class="section-label">Quick answers</span><h2 id="${faqSectionId}">Frequently asked questions</h2>
+            ${metadata.faq.map(([question, answer]) => `<details><summary>${question}</summary><p>${answer}</p></details>`).join('')}
+          </section>
+          </div>
+        </main>
+        <aside class="blog-post__toc"><h2>On this page</h2><nav aria-label="Article contents">${tocHtml}</nav></aside>
       </div>
-      <div class="blog-post__content">
-        ${post.content}
-        <section class="blog-faq">
-          <h2>Frequently asked questions</h2>
-          <h3>How can CashHub help with this topic?</h3>
-          <p>CashHub brings practical invoicing tools and calculators together so you can apply these ideas directly to your everyday workflow.</p>
-          <h3>Should I adapt this guidance to my business?</h3>
-          <p>Yes. Requirements vary by country, industry and client contract, so use this article as educational guidance and confirm important tax or legal decisions with a qualified professional.</p>
-          <h3>Where can I suggest a correction or new topic?</h3>
-          <p>Use the Contact Us page to share feedback, missing features or ideas for future articles.</p>
-        </section>
-      </div>
+      <div class="blog-post__footer"><a href="#/blog" class="btn btn--secondary">← Back to all guides</a></div>
     </article>
   `;
 }

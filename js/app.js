@@ -180,6 +180,7 @@ async function navigateTo(path) {
             }
         }
         if (page === 'contact') initContactPage();
+        if (page === 'blog' && parts[1]) initBlogToc(mainContent);
 
         // Trigger entrance animations
         requestAnimationFrame(() => {
@@ -197,6 +198,18 @@ async function navigateTo(path) {
         console.error('Navigation error:', err);
         mainContent.innerHTML = render404();
     }
+}
+
+function initBlogToc(root = document) {
+    root.querySelectorAll('.blog-post__toc a').forEach(link => {
+        link.addEventListener('click', event => {
+            event.preventDefault();
+            const target = root.querySelector(link.getAttribute('href'));
+            if (!target) return;
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+        });
+    });
 }
 
 function initHeroWord(root = document) {
