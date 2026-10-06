@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CashHub — Free Invoice Generator & Calculators</title>
+    <meta name="description"
+        content="Create professional invoices, download PDFs, and use powerful financial calculators — all for free.">
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- html2pdf.js for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/aj∑∑∑ax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+</head>
+
+<body>
+    <!-- ========== HEADER / NAVIGATION ========== -->
+    <header class="header" id="header">
+        <div class="container header__inner">
+            <!-- Logo -->
+            <a href="#/" class="header__logo" aria-label="CashHub Home">
+                <div class="logo-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="8" fill="var(--accent)" />
+                        <path
+                            d="M16 6C10.477 6 6 10.477 6 16s4.477 10 10 10 10-4.477 10-10S21.523 6 16 6zm1 15.93V23h-2v-1.07A5.008 5.008 0 0111 17h2a3 3 0 006 0c0-1.3-.84-2.4-2-2.82V10.07A5.008 5.008 0 0121 15h-2a3 3 0 00-6 0c0 1.3.84 2.4 2 2.82v4.11z"
+                            fill="white" />
+                    </svg>
+                </div>
+                <span class="logo-text">Cash<span class="logo-highlight">Hub</span></span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="header__nav" id="mainNav" aria-label="Main navigation">
+                <a href="#/" class="nav-link" data-page="home">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                        <polyline points="9,22 9,12 15,12 15,22" />
+                    </svg>
+                    Home
+                </a>
+                <a href="#/invoice" class="nav-link" data-page="invoice">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                        <polyline points="14,2 14,8 20,8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <polyline points="10,9 9,9 8,9" />
+                    </svg>
+                    Invoice
+                </a>
+                <a href="#/calculators" class="nav-link" data-page="calculators">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="4" y="2" width="16" height="20" rx="2" />
+                        <line x1="8" y1="6" x2="16" y2="6" />
+                        <line x1="8" y1="10" x2="10" y2="10" />
+                        <line x1="14" y1="10" x2="16" y2="10" />
+                        <line x1="8" y1="14" x2="10" y2="14" />
+                        <line x1="14" y1="14" x2="16" y2="14" />
+                        <line x1="8" y1="18" x2="10" y2="18" />
+                        <line x1="14" y1="18" x2="16" y2="18" />
+                    </svg>
+                    Calculators
+                </a>
+                <a href="#/blog" class="nav-link" data-page="blog">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" />
+                        <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" />
+                    </svg>
+                    Blog
+                </a>
+                <a href="#/contact" class="nav-link" data-page="contact">Contact Us</a>
+            </nav>
+
+            <!-- Header Actions -->
+            <div class="header__actions">
+                <!-- Theme Toggle -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+                    <svg class="theme-icon theme-icon--light" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <circle cx="12" cy="12" r="5" />
+                        <line x1="12" y1="1" x2="12" y2="3" />
+                        <line x1="12" y1="21" x2="12" y2="23" />
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                        <line x1="1" y1="12" x2="3" y2="12" />
+                        <line x1="21" y1="12" x2="23" y2="12" />
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                    </svg>
+                    <svg class="theme-icon theme-icon--dark" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                    </svg>
+                </button>
+
+                <!-- CTA Button -->
+                <a href="#/invoice" class="btn btn--primary header__cta">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                    Create Invoice
+                </a>
+
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu" aria-expanded="false">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu-overlay" id="mobileOverlay"></div>
+
+        <!-- Mobile Navigation -->
+        <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+            <div class="mobile-nav__header">
+                <span class="mobile-nav__title">Menu</span>
+                <button class="mobile-nav__close" id="mobileNavClose" aria-label="Close menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <a href="#/" class="mobile-nav-link" data-page="home">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                    <polyline points="9,22 9,12 15,12 15,22" />
+                </svg>
+                Home
+            </a>
+            <a href="#/invoice" class="mobile-nav-link" data-page="invoice">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                    <polyline points="14,2 14,8 20,8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10,9 9,9 8,9" />
+                </svg>
+                Invoice Generator
+            </a>
+            <a href="#/calculators" class="mobile-nav-link" data-page="calculators">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="4" y="2" width="16" height="20" rx="2" />
+                    <line x1="8" y1="6" x2="16" y2="6" />
+                    <line x1="8" y1="10" x2="10" y2="10" />
+                    <line x1="14" y1="10" x2="16" y2="10" />
+                    <line x1="8" y1="14" x2="10" y2="14" />
+                    <line x1="14" y1="14" x2="16" y2="14" />
+                    <line x1="8" y1="18" x2="10" y2="18" />
+                    <line x1="14" y1="18" x2="16" y2="18" />
+                </svg>
+                Calculators
+            </a>
+            <a href="#/blog" class="mobile-nav-link" data-page="blog">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" />
+                    <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" />
+                </svg>
+                Blog
+            </a>
+            <a href="#/contact" class="mobile-nav-link" data-page="contact">Contact Us</a>
+            <div class="mobile-nav__divider"></div>
+            <a href="#/invoice" class="btn btn--primary mobile-nav__cta">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Create Invoice
+            </a>
+        </nav>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main" id="mainContent">
+        <!-- Dynamic content rendered here by router -->
+        <div class="page-loader" id="pageLoader">
+            <div class="loader-spinner"></div>
+        </div>
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <!-- Brand -->
+                <div class="footer__brand">
+                    <a href="#/" class="header__logo">
+                        <div class="logo-icon">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <rect width="32" height="32" rx="8" fill="var(--accent)" />
+                                <path
+                                    d="M16 6C10.477 6 6 10.477 6 16s4.477 10 10 10 10-4.477 10-10S21.523 6 16 6zm1 15.93V23h-2v-1.07A5.008 5.008 0 0111 17h2a3 3 0 006 0c0-1.3-.84-2.4-2-2.82V10.07A5.008 5.008 0 0121 15h-2a3 3 0 00-6 0c0 1.3.84 2.4 2 2.82v4.11z"
+                                    fill="white" />
+                            </svg>
+                        </div>
+                        <span class="logo-text">Cash<span class="logo-highlight">Hub</span></span>
+                    </a>
+                    <p class="footer__desc">Create professional invoices, calculate payments, and manage your billing —
+                        completely free.</p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer__col">
+                    <h4 class="footer__heading">Tools</h4>
+                    <a href="#/invoice" class="footer__link">Invoice Generator</a>
+                    <a href="#/calculators" class="footer__link">All Calculators</a>
+                    <a href="#/calculator/sales-tax" class="footer__link">Sales Tax Calculator</a>
+                    <a href="#/calculator/markup" class="footer__link">Markup Calculator</a>
+                </div>
+
+                <!-- Resources -->
+                <div class="footer__col">
+                    <h4 class="footer__heading">Resources</h4>
+                    <a href="#/blog" class="footer__link">Blog</a>
+                    <a href="#/blog/invoicing-best-practices" class="footer__link">Invoicing Guide</a>
+                    <a href="#/blog/tax-tips" class="footer__link">Tax Tips</a>
+                </div>
+
+                <!-- Calculators -->
+                <div class="footer__col">
+                    <h4 class="footer__heading">Calculators</h4>
+                    <a href="#/calculator/vat" class="footer__link">VAT Calculator</a>
+                    <a href="#/calculator/gst" class="footer__link">GST Calculator</a>
+                    <a href="#/calculator/margin" class="footer__link">Margin Calculator</a>
+                    <a href="#/calculator/late-payment-fee" class="footer__link">Late Fee Calculator</a>
+                </div>
+            </div>
+
+            <div class="footer__bottom">
+                <p class="footer__copyright">&copy; 2026 CashHub. Free Invoice Generator Tool.</p>
+                <div class="footer__bottom-links">
+                    <a href="#/terms" class="footer__link">Terms &amp; Conditions</a>
+                    <a href="#/privacy" class="footer__link">Privacy Policy</a>
+                    <span class="footer__made-with">Made with ❤️ for professionals</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script type="module" src="js/app.js"></script>
+</body>
+
+</html>
