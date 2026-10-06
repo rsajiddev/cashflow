@@ -327,7 +327,7 @@ export function renderInvoice() {
 // Add these custom styles inside JS to ensure it works if CSS is missing, or user can put in CSS file.
 // The prompt implies CSS classes are provided or expected to be in global CSS.
 
-window.initInvoicePage = function() {
+window.initInvoicePage = function () {
     let items = [
         { desc: 'Web Design Services', qty: 1, rate: 1000 },
         { desc: 'Hosting (1 year)', qty: 1, rate: 120 },
@@ -386,7 +386,7 @@ window.initInvoicePage = function() {
             if (window.CashHub?.showToast) {
                 window.CashHub.showToast(`Imported "${imported.desc || 'Calculation'}" into invoice!`, 'success');
             }
-        } catch(err) {
+        } catch (err) {
             console.error('Error importing calculation:', err);
         }
     }
@@ -400,7 +400,7 @@ window.initInvoicePage = function() {
     function renderItems() {
         const tbody = document.getElementById('previewTableBody');
         if (!tbody) return;
-        
+
         tbody.innerHTML = '';
         let subtotal = 0;
 
@@ -447,7 +447,7 @@ window.initInvoicePage = function() {
         document.getElementById('previewTaxRate').textContent = taxRate + '%';
         document.getElementById('previewDiscountAmt').textContent = discount.toFixed(2);
         document.getElementById('previewTotal').textContent = formatCurrency(total);
-        
+
         // Update currency symbols across DOM
         document.querySelectorAll('.currency-symbol').forEach(el => el.textContent = currentCurrency);
     }
@@ -457,7 +457,7 @@ window.initInvoicePage = function() {
         document.getElementById('previewBizName').textContent = document.getElementById('bizName').value || ' ';
         document.getElementById('previewBizNameDetails').textContent = document.getElementById('bizName').value || ' ';
         document.getElementById('previewBizAddress').innerHTML = (document.getElementById('bizAddress').value || ' ').replace(/\\n/g, '<br>');
-        
+
         const phone = document.getElementById('bizPhone').value;
         const email = document.getElementById('bizEmail').value;
         document.getElementById('previewBizContact').innerHTML = `${email}${phone ? '<br>' + phone : ''}`;
@@ -473,12 +473,12 @@ window.initInvoicePage = function() {
         document.getElementById('previewInvDueDate').textContent = document.getElementById('invDueDate').value || ' ';
 
         currentCurrency = document.getElementById('invCurrency').value;
-        
+
         // Customization
         const headerBg = document.getElementById('customHeaderBg').value;
         const headerColor = document.getElementById('customHeaderColor').value;
         const fontSize = document.getElementById('invFontSize').value;
-        
+
         document.getElementById('previewTableHeader').style.backgroundColor = headerBg;
         document.getElementById('previewTableHeader').style.color = headerColor;
         document.querySelectorAll('#previewTableHeader th').forEach(cell => {
@@ -509,7 +509,7 @@ window.initInvoicePage = function() {
         if (e.target.classList.contains('item-input')) {
             const index = e.target.getAttribute('data-index');
             const field = e.target.getAttribute('data-field');
-            if(field === 'desc') {
+            if (field === 'desc') {
                 items[index][field] = e.target.value;
             } else {
                 items[index][field] = parseFloat(e.target.value) || 0;
@@ -571,14 +571,14 @@ window.initInvoicePage = function() {
         opt.addEventListener('click', () => {
             templateOptions.forEach(o => o.classList.remove('active'));
             opt.classList.add('active');
-            
+
             const template = opt.getAttribute('data-template');
             const preview = document.getElementById('invoicePreview');
-            
+
             // Remove existing template classes
             preview.className = 'invoice-template';
             preview.classList.add(`template-${template}`);
-            
+
             document.querySelector('.template-badge').textContent = opt.querySelector('span').textContent + ' Template';
         });
     });
@@ -591,7 +591,7 @@ window.initInvoicePage = function() {
         if (window.html2pdf) {
             try {
                 if (document.fonts?.ready) await document.fonts.ready;
-                await Promise.all([...element.querySelectorAll('img')].map(image => image.decode?.().catch(() => {})));
+                await Promise.all([...element.querySelectorAll('img')].map(image => image.decode?.().catch(() => { })));
                 await window.html2pdf().set({
                     margin: 0.5,
                     filename: `invoice-${invoiceNumber}.pdf`,
@@ -632,41 +632,41 @@ window.initInvoicePage = function() {
 
     // Reset
     document.getElementById('btnReset')?.addEventListener('click', () => {
-        if(confirm('Are you sure you want to reset all fields to default?')) {
+        if (confirm('Are you sure you want to reset all fields to default?')) {
             items = [
                 { desc: 'Web Design Services', qty: 1, rate: 1000 },
                 { desc: 'Hosting (1 year)', qty: 1, rate: 120 },
                 { desc: 'Domain Registration', qty: 1, rate: 15 }
             ];
-            
+
             // Reset form fields
             document.getElementById('bizName').value = 'Your Company LLC';
             document.getElementById('bizAddress').value = '123 Business St\\nCity, State 12345';
             document.getElementById('bizEmail').value = 'hello@yourcompany.com';
             document.getElementById('bizPhone').value = '(555) 123-4567';
-            
+
             document.getElementById('clientName').value = 'Client Name';
             document.getElementById('clientAddress').value = '456 Client Rd\\nCity, State 67890';
             document.getElementById('clientEmail').value = 'client@example.com';
-            
+
             document.getElementById('invNumber').value = 'INV-001';
             document.getElementById('invCurrency').value = '$';
             document.getElementById('invDate').value = new Date().toISOString().split('T')[0];
             document.getElementById('invDueDate').value = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-            
+
             document.getElementById('customHeaderBg').value = '#6366F1';
             document.getElementById('customHeaderColor').value = '#FFFFFF';
             document.getElementById('invFontSize').value = '14px';
-            
+
             document.getElementById('invNotes').value = 'Thank you for your business.';
             document.getElementById('invTerms').value = 'Payment is due within 14 days. Please make checks payable to Your Company LLC.';
-            
+
             document.getElementById('taxInput').value = 0;
             document.getElementById('discountInput').value = 0;
 
             // Reset template
             templateOptions[0].click();
-            
+
             updatePreview();
         }
     });

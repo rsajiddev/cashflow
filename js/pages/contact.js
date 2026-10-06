@@ -2,20 +2,20 @@ export function renderContact() {
   return `
     <section class="section contact-page">
       <div class="container">
-        <div class="page-hero animate-in">
+        <div class="page-hero page-hero--center animate-in">
           <span class="section-label">We listen</span>
           <h1 class="section-title">Help us make CashHub better</h1>
-          <p class="section-desc">Tell us how you use CashHub, what worked well, and what would make your workflow even easier.</p>
+          <p class="section-desc">Tell us how you use CashHub, what works well, and what would make your invoicing, payments, or calculations easier.</p>
         </div>
         <div class="contact-layout">
           <aside class="card contact-aside">
             <div class="card__icon">✦</div>
             <h2>Share your perspective</h2>
-            <p>Your feedback helps us prioritise practical improvements for freelancers, small teams and growing businesses.</p>
+            <p>Whether you create invoices, track payments, or use our calculators, your feedback helps make CashHub clearer and more useful for everyday work.</p>
             <div class="contact-points">
-              <div><strong>Use case</strong><span>How you use invoices or calculators</span></div>
-              <div><strong>Experience</strong><span>What felt clear or frustrating</span></div>
-              <div><strong>Ideas</strong><span>Features you would love to see</span></div>
+              <div><strong>Use case</strong><span>Which tools you use and what you need to get done</span></div>
+              <div><strong>Experience</strong><span>What felt simple, confusing, or slowed your workflow</span></div>
+              <div><strong>Ideas</strong><span>Features or changes that would make CashHub more useful</span></div>
             </div>
           </aside>
           <form class="card contact-form" id="contactForm">
@@ -27,7 +27,7 @@ export function renderContact() {
             <div class="form-group"><label class="form-label" for="contactUse">What do you use CashHub for?</label><textarea class="form-textarea" id="contactUse" name="use" rows="3" placeholder="Tell us about your workflow"></textarea></div>
             <div class="form-group"><label class="form-label" for="contactExperience">How has your experience been?</label><textarea class="form-textarea" id="contactExperience" name="experience" rows="3" placeholder="What is working well or getting in the way?"></textarea></div>
             <div class="form-group"><label class="form-label" for="contactSuggestions">Suggestions or missing features</label><textarea class="form-textarea" id="contactSuggestions" name="suggestions" rows="4" required placeholder="Share an improvement idea or feature request"></textarea></div>
-            <button class="btn btn--primary btn--lg" type="submit">Send feedback <span aria-hidden="true">→</span></button>
+            <button class="btn btn--primary btn--lg" type="submit">Send feedback</span></button>
             <p class="form-hint">This opens your email app with a neatly formatted message addressed to the CashHub team.</p>
           </form>
         </div>
