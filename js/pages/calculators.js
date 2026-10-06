@@ -2,111 +2,114 @@ export function renderCalculatorsHub() {
   return `
     <section class="section">
       <div class="container calculators-hub-container">
-        <div class="page-hero page-hero--center animate-in"><span class="section-label">CashHub tools</span><h1 class="section-title">Free Invoice &amp; Business Calculators</h1><p class="section-desc">Tools to help you manage billing, payments, taxes, pricing and cash flow.</p></div>
+        <div class="page-hero page-hero--center animate-in"><span class="section-label">CashHub tools</span><h1 class="section-title">Free Invoice &amp; Business Calculators</h1><p class="section-desc">Explore practical tools to set payment dates, calculate taxes and discounts, build accurate invoices, and make confident pricing decisions.</p></div>
 
         <div class="calc-category">
           <div class="calc-category__header">
-            <h2>Category 1: DUE DATES — Payment Terms & Late Payments</h2>
-            <p>Work out due dates, late fees, and days past due.</p>
+            <span class="calc-category__eyebrow">PAYMENT TIMING</span>
+            <h2>Due dates &amp; late payments</h2>
+            <p>Plan payment deadlines, count working days, and understand overdue charges at a glance.</p>
           </div>
           <div class="calc-grid">
             <a href="#/calculator/invoice-due-date" class="card card--clickable">
               <div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>
               <h3 class="card__title">Invoice Due Date Calculator</h3>
-              <p class="card__desc">Calculate invoice due dates for Net 7, 15, 30, 45, 60, 90, and custom payment terms.</p>
+              <p class="card__desc">Set a due date from an invoice date using common Net terms—from Net 7 to Net 90—or enter a custom number of days. See the deadline before you send the invoice.</p>
             </a>
             <a href="#/calculator/business-days" class="card card--clickable">
               <div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10H3M21 6H3M21 14H3M21 18H3"></path></svg></div>
               <h3 class="card__title">Business Days Calculator</h3>
-              <p class="card__desc">Add or subtract business days from a date, or count working days between two dates.</p>
+              <p class="card__desc">Move a date forward or backward by a chosen number of working days, or count business days between two dates. Useful for delivery schedules and payment planning.</p>
             </a>
             <a href="#/calculator/late-payment-fee" class="card card--clickable">
               <div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
               <h3 class="card__title">Late Payment Fee Calculator</h3>
-              <p class="card__desc">Calculate flat, percentage, or recurring late fees on overdue invoices.</p>
+              <p class="card__desc">Estimate the charge on an overdue invoice using a flat fee or a percentage of the balance, with options for recurring fees. Compare the added cost before following up.</p>
             </a>
             <a href="#/calculator/late-payment-interest" class="card card--clickable">
               <div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
               <h3 class="card__title">Late Payment Interest Calculator</h3>
-              <p class="card__desc">Compute interest accrued on an unpaid invoice balance.</p>
+              <p class="card__desc">Estimate interest on an unpaid invoice using its balance, rate, and overdue period. Review the accrued amount to support clear, consistent payment reminders.</p>
             </a>
             <a href="#/calculator/days-past-due" class="card card--clickable">
               <div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M9 16l2 2 4-4"></path></svg></div>
               <h3 class="card__title">Days Past Due Calculator</h3>
-              <p class="card__desc">Count how many calendar days an invoice is past due and which AR aging bucket it falls into.</p>
+              <p class="card__desc">Enter the due date to see how many calendar days payment is overdue and identify its accounts-receivable aging bucket. Get a clearer view of which balances need attention.</p>
             </a>
           </div>
         </div>
 
         <div class="calc-category">
           <div class="calc-category__header">
-            <h2>Category 2: ADJUSTMENTS — Tax & Discounts</h2>
-            <p>Estimate sales tax, VAT, GST, and invoice discounts.</p>
+            <span class="calc-category__eyebrow">TAXES &amp; SAVINGS</span>
+            <h2>Tax &amp; discounts</h2>
+            <p>Work out tax-inclusive or pre-tax amounts, then see how discounts change the final price.</p>
           </div>
           <div class="calc-grid">
             <a href="#/calculator/sales-tax" class="card card--clickable">
               <div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
               <h3 class="card__title">Sales Tax Calculator</h3>
-              <p class="card__desc">Add sales tax to a pre-tax amount or remove tax from a tax-inclusive total.</p>
+              <p class="card__desc">Add a sales tax rate to a pre-tax price to find the tax and final total, or reverse the calculation to separate tax from an inclusive price.</p>
             </a>
             <a href="#/calculator/vat" class="card card--clickable">
               <div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22 6 12 13 2 6"></polyline></svg></div>
               <h3 class="card__title">VAT Calculator</h3>
-              <p class="card__desc">Add VAT to a net amount or remove VAT from a VAT-inclusive total using any VAT rate.</p>
+              <p class="card__desc">Calculate VAT on a net amount using your rate, or extract the VAT portion from a VAT-inclusive total. See the tax amount and adjusted price together.</p>
             </a>
             <a href="#/calculator/gst" class="card card--clickable">
               <div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg></div>
               <h3 class="card__title">GST Calculator</h3>
-              <p class="card__desc">Add GST to a pre-tax amount or extract GST from a GST-inclusive total.</p>
+              <p class="card__desc">Work out GST on a pre-tax amount or separate the tax from a GST-inclusive price. Enter the applicable rate to see the GST amount and net value.</p>
             </a>
             <a href="#/calculator/invoice-discount" class="card card--clickable">
               <div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19"></line><circle cx="6.5" cy="6.5" r="2.5"></circle><circle cx="17.5" cy="17.5" r="2.5"></circle></svg></div>
               <h3 class="card__title">Invoice Discount Calculator</h3>
-              <p class="card__desc">Apply a percentage or fixed discount and see the new invoice total.</p>
+              <p class="card__desc">Compare percentage-based and fixed-amount discounts against an invoice subtotal. See the savings and updated amount due before applying the reduction.</p>
             </a>
             <a href="#/calculator/early-payment-discount" class="card card--clickable">
               <div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div>
               <h3 class="card__title">Early Payment Discount Calculator</h3>
-              <p class="card__desc">Calculate early-payment terms such as 2/10 Net 30, including savings and deadlines.</p>
+              <p class="card__desc">Evaluate early-payment terms such as 2/10 Net 30 by comparing the discount savings with the standard payment deadline. See the amount to pay and the date to qualify.</p>
             </a>
           </div>
         </div>
 
         <div class="calc-category">
           <div class="calc-category__header">
-            <h2>Category 3: INVOICING — Create & Price</h2>
-            <p>Build invoice totals, hourly rates, and project pricing.</p>
+            <span class="calc-category__eyebrow">INVOICING &amp; PRICING</span>
+            <h2>Build invoices &amp; set prices</h2>
+            <p>Bring costs, billable time, tax, and payments together to price work and understand what remains due.</p>
           </div>
           <div class="calc-grid">
             <a href="#/calculator/invoice-calc" class="card card--clickable">
               <div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
               <h3 class="card__title">Invoice Calculator</h3>
-              <p class="card__desc">Add line items, discounts, tax, and payments to get the invoice total and balance due.</p>
+              <p class="card__desc">Combine multiple line items with tax, discounts, and payments to calculate the invoice total and remaining balance. Check every part of the amount due in one place.</p>
             </a>
             <a href="#/calculator/hourly-invoice" class="card card--clickable">
               <div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
               <h3 class="card__title">Hourly Invoice Calculator</h3>
-              <p class="card__desc">Turn hours and hourly rates into an invoice total, with expenses, discounts, and tax.</p>
+              <p class="card__desc">Convert billable hours and your hourly rate into an invoice amount, then include expenses, discounts, and tax. See how each adjustment affects the final total.</p>
             </a>
             <a href="#/calculator/contractor-invoice" class="card card--clickable">
               <div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></div>
               <h3 class="card__title">Contractor Invoice Calculator</h3>
-              <p class="card__desc">Price contractor invoices from labor, materials, and job costs.</p>
+              <p class="card__desc">Build a job price from labor, materials, and other project costs. Organize the main cost components to estimate a clear contractor invoice total.</p>
             </a>
             <a href="#/calculator/project-invoice" class="card card--clickable">
               <div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg></div>
               <h3 class="card__title">Project Invoice Calculator</h3>
-              <p class="card__desc">Invoice fixed-price or milestone project work with expenses, discounts, tax, and deposits.</p>
+              <p class="card__desc">Price fixed-fee or milestone-based work and account for expenses, discounts, tax, and deposits. Review the resulting project invoice and remaining amount.</p>
             </a>
             <a href="#/calculator/markup" class="card card--clickable">
               <div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg></div>
               <h3 class="card__title">Markup Calculator</h3>
-              <p class="card__desc">Calculate selling price and profit from cost plus markup percentage.</p>
+              <p class="card__desc">Apply a markup percentage to your cost to calculate a selling price, then see the resulting profit. Use it to compare pricing options before quoting.</p>
             </a>
             <a href="#/calculator/margin" class="card card--clickable">
               <div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg></div>
               <h3 class="card__title">Margin Calculator</h3>
-              <p class="card__desc">Calculate selling price from a target margin, or analyze markup and margin from a price.</p>
+              <p class="card__desc">Find the selling price needed to reach a target profit margin, or work backward from a price to understand its margin and markup. Make pricing decisions with both measures in view.</p>
             </a>
           </div>
         </div>

@@ -2363,10 +2363,25 @@ h6 {
 .footer__bottom-links { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
 .footer__bottom-links .footer__link { display: inline; padding: 0; font-size: .84rem; }
 .header__nav .nav-icon, .mobile-nav .nav-icon { display: none; }
-.calculators-hub-container > .page-hero { margin-bottom: 54px; }
-.calc-category__header { text-align: center; max-width: 760px; margin-left: auto; margin-right: auto; }
-.calc-category__header h2 { font-size: clamp(1.25rem, 2.4vw, 1.7rem); }
-.calc-category__header p { color: var(--text-secondary); }
+.calculators-hub-container { width: min(100% - 48px, 1240px); }
+.calculators-hub-container > .page-hero { max-width: 780px; margin-bottom: 52px; }
+.calc-category { margin-bottom: 40px; }
+.calc-category + .calc-category { padding-top: 34px; border-top: 1px solid var(--border); }
+.calc-category__header { max-width: 760px; margin: 0 auto 24px; text-align: center; }
+.calc-category__eyebrow { display: inline-block; margin-bottom: 7px; color: var(--accent); font-size: .72rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
+.calc-category__header h2 { margin: 0 0 8px; font-size: clamp(1.25rem, 2.4vw, 1.7rem); line-height: 1.25; }
+.calc-category__header p { max-width: 640px; margin: 0 auto; color: var(--text-secondary); line-height: 1.65; }
+.calculators-hub-container .calc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.calculators-hub-container .calc-grid > .card { display: grid; grid-template-columns: 36px minmax(0, 1fr); grid-template-rows: auto 1fr auto; align-content: stretch; align-items: start; gap: 12px 14px; min-width: 0; padding: 20px; }
+.calculators-hub-container .calc-grid > .card .card__icon { grid-column: 1; grid-row: 1; width: 36px; height: 36px; margin: 0; border-radius: 9px; }
+.calculators-hub-container .calc-grid > .card .card__icon svg { width: 19px; height: 19px; }
+.calculators-hub-container .calc-grid > .card .card__title { grid-column: 2; grid-row: 1; align-self: center; min-width: 0; margin: 0; font-size: .98rem; line-height: 1.4; overflow-wrap: anywhere; }
+.calculators-hub-container .calc-grid > .card .card__desc { grid-column: 1 / -1; grid-row: 2; margin: 0; font-size: .86rem; line-height: 1.65; }
+.calculators-hub-container .calc-grid > .card::after { grid-column: 1 / -1; grid-row: 3; align-self: end; margin-top: 2px; color: var(--accent); content: 'Open calculator  →'; font-size: .84rem; font-weight: 650; }
+.calculators-hub-container .calc-grid > .card:hover::after { color: var(--accent-hover); }
+@media (min-width: 624px) and (max-width: 1023px) {
+    .calculators-hub-container .calc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 .faq-list details p { max-height: 0; overflow: hidden; opacity: 0; padding-top: 0; transition: max-height .26s ease, opacity .2s ease, padding-top .26s ease; }
 .faq-list details.is-open p { max-height: 180px; opacity: 1; padding-top: 12px; }
 .faq-list details.is-open summary::after { content: '−'; }
@@ -2415,6 +2430,20 @@ h6 {
 
 @media (max-width: 623px) {
     .page-hero { margin-bottom: 28px; }
+    .calculators-hub-container { width: calc(100% - 32px); }
+    .calculators-hub-container > .page-hero { margin-bottom: 36px; }
+    .calc-category { margin-bottom: 30px; }
+    .calc-category + .calc-category { padding-top: 28px; }
+    .calc-category__header { margin-bottom: 18px; padding: 0 4px; }
+    .calc-category__header p { font-size: .9rem; }
+    .calculators-hub-container .calc-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+    .calculators-hub-container .calc-grid > .card { grid-template-columns: 36px minmax(0, 1fr); gap: 10px 12px; padding: 16px; }
+    .calculators-hub-container .calc-grid > .card .card__icon { grid-column: 1; grid-row: 1; }
+    .calculators-hub-container .calc-grid > .card .card__title { grid-column: 2; grid-row: 1; font-size: .96rem; }
+    .calculators-hub-container .calc-grid > .card .card__desc,
+    .calculators-hub-container .calc-grid > .card::after { grid-column: 1 / -1; }
+    .calculators-hub-container .calc-grid > .card .card__desc { grid-row: 2; font-size: .86rem; }
+    .calculators-hub-container .calc-grid > .card::after { grid-row: 3; }
     .contact-form { padding: 20px; }
     .footer__bottom-links { justify-content: center; }
     .blog-card__image { height: 140px; }
