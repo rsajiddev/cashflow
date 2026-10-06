@@ -78,6 +78,47 @@ export function initReceiptPage() {
   canvas.addEventListener('pointerdown', e => { drawing = true; const p = point(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
   canvas.addEventListener('pointermove', e => { if (!drawing) return; const p = point(e); ctx.strokeStyle = $('recSignatureColor').value; ctx.lineWidth = 2.2; ctx.lineCap = 'round'; ctx.lineTo(p.x, p.y); ctx.stroke(); $('recPreviewSignature').src = canvas.toDataURL('image/png'); });
   ['pointerup', 'pointerleave'].forEach(event => canvas.addEventListener(event, () => { drawing = false; }));
-  $('btnDownloadReceipt').addEventListener('click', () => { const element = $('receiptPreview'); element.classList.add('pdf-mode'); if (window.html2pdf) html2pdf().set({ margin: .45, filename: `receipt-${$('recNumber').value || 'draft'}.pdf`, image: { type: 'jpeg', quality: .98 }, html2canvas: { scale: 2, useCORS: true }, jsPDF: { unit: 'in', format: 'a4' } }).from(element).save().finally(() => element.classList.remove('pdf-mode')); else window.print(); });
+  $('btnDownloadReceipt').addEventListener('click', async () => {
+    preview.classList.add('pdf-mode');
+    if (window.html2pdf) {
+      try {
+        if (document.fonts?.ready) await document.fonts.ready;
+        await Promise.all([...preview.querySelectorAll('img')].map(image => image.decode?.().catch(() => {})));
+        await window.html2pdf().set({
+          margin: .45,
+          filename: `receipt-${$('recNumber').value || 'draft'}.pdf`,
+          image: { type: 'jpeg', quality: .98 },
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            scrollX: 0,
+            scrollY: 0,
+            onclone: clonedDocument => {
+              const clonedPreview = clonedDocument.getElementById('receiptPreview');
+              if (!clonedPreview) return;
+              clonedPreview.style.cssText += ';display:block!important;position:static!important;width:740px!important;max-width:none!important;height:auto!important;min-height:0!important;overflow:visible!important;opacity:1!important;visibility:visible!important;transform:none!important;background:#fff!important';
+              clonedPreview.querySelectorAll('*').forEach(node => { node.style.visibility = 'visible'; });
+            }
+          },
+          jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+        }).from(preview).save();
+        preview.classList.remove('pdf-mode');
+        return;
+      } catch (error) {
+        console.error('Receipt PDF export failed; using print fallback.', error);
+        preview.classList.remove('pdf-mode');
+      }
+    }
+
+    // Browser's Save as PDF fallback: isolate printing to the receipt itself.
+    document.body.classList.add('receipt-print-mode');
+    const cleanup = () => {
+      document.body.classList.remove('receipt-print-mode');
+      preview.classList.remove('pdf-mode');
+    };
+    window.addEventListener('afterprint', cleanup, { once: true });
+    window.print();
+  });
   renderItems();
 }

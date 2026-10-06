@@ -112,6 +112,16 @@ export function renderInvoice() {
                         <input type="date" class="form-input update-trigger" id="invDueDate" value="${new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}">
                     </div>
                 </div>
+                <div class="form-row invoice-adjustments">
+                    <div class="form-group">
+                        <label class="form-label" for="taxInput">Tax (%)</label>
+                        <input type="number" class="form-input update-trigger" id="taxInput" value="0" min="0" step="0.1" inputmode="decimal">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="discountInput">Discount</label>
+                        <input type="number" class="form-input update-trigger" id="discountInput" value="0" min="0" step="0.01" inputmode="decimal">
+                    </div>
+                </div>
             </div>
 
             <!-- Customization -->
@@ -277,12 +287,12 @@ export function renderInvoice() {
                             <span class="totals-value" id="previewSubtotal">$0.00</span>
                         </div>
                         <div class="totals-row">
-                            <span class="totals-label totals-label--editable"><span>Tax %:</span><input type="number" class="tax-input hide-in-pdf update-trigger" id="taxInput" value="0" min="0" step="0.1"><span class="show-in-pdf-only" id="previewTaxRate">0%</span></span>
+                            <span class="totals-label">Tax (<span id="previewTaxRate">0%</span>):</span>
                             <span class="totals-value" id="previewTaxAmt">$0.00</span>
                         </div>
                         <div class="totals-row discount-row">
                             <span class="totals-label">Discount:</span>
-                            <span class="totals-value discount-value">-<span class="currency-symbol">$</span><input type="number" class="discount-input hide-in-pdf update-trigger" id="discountInput" value="0" min="0" step="0.01"> <span class="show-in-pdf-only" id="previewDiscountAmt">0.00</span></span>
+                            <span class="totals-value discount-value">-<span class="currency-symbol">$</span><span id="previewDiscountAmt">0.00</span></span>
                         </div>
                         <div class="totals-row grand-total">
                             <span class="totals-label">Total:</span>
@@ -574,31 +584,50 @@ window.initInvoicePage = function() {
     });
 
     // PDF Download
-    document.getElementById('btnDownloadPdf')?.addEventListener('click', () => {
+    document.getElementById('btnDownloadPdf')?.addEventListener('click', async () => {
         const element = document.getElementById('invoicePreview');
         const invoiceNumber = document.getElementById('invNumber').value || 'draft';
-        
-        // Add a class to hide inputs and show spans during PDF generation
         element.classList.add('pdf-mode');
-        
-        const opt = {
-            margin: 0.5,
-            filename: `invoice-${invoiceNumber}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-        };
-        
         if (window.html2pdf) {
-            html2pdf().set(opt).from(element).save().then(() => {
+            try {
+                if (document.fonts?.ready) await document.fonts.ready;
+                await Promise.all([...element.querySelectorAll('img')].map(image => image.decode?.().catch(() => {})));
+                await window.html2pdf().set({
+                    margin: 0.5,
+                    filename: `invoice-${invoiceNumber}.pdf`,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: {
+                        scale: 2,
+                        useCORS: true,
+                        backgroundColor: '#ffffff',
+                        scrollX: 0,
+                        scrollY: 0,
+                        onclone: clonedDocument => {
+                            const clonedPreview = clonedDocument.getElementById('invoicePreview');
+                            if (!clonedPreview) return;
+                            clonedPreview.style.cssText += ';display:block!important;position:static!important;width:740px!important;max-width:none!important;height:auto!important;min-height:0!important;overflow:visible!important;opacity:1!important;visibility:visible!important;transform:none!important;background:#fff!important';
+                            clonedPreview.querySelectorAll('.hide-in-pdf').forEach(node => { node.style.display = 'none'; });
+                            clonedPreview.querySelectorAll('.show-in-pdf-only').forEach(node => { node.style.display = 'inline'; });
+                            clonedPreview.querySelectorAll('*').forEach(node => { node.style.visibility = 'visible'; });
+                        }
+                    },
+                    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+                }).from(element).save();
                 element.classList.remove('pdf-mode');
-            }).catch(() => {
+                return;
+            } catch (error) {
+                console.error('Invoice PDF export failed; using print fallback.', error);
                 element.classList.remove('pdf-mode');
-            });
-        } else {
-            alert('html2pdf library is not loaded. Please ensure html2pdf.js is included in your page.');
-            element.classList.remove('pdf-mode');
+            }
         }
+
+        document.body.classList.add('invoice-print-mode');
+        const cleanup = () => {
+            document.body.classList.remove('invoice-print-mode');
+            element.classList.remove('pdf-mode');
+        };
+        window.addEventListener('afterprint', cleanup, { once: true });
+        window.print();
     });
 
     // Reset

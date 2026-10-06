@@ -2312,6 +2312,63 @@ h6 {
     body {
         background: white;
     }
+
+    body.receipt-print-mode * {
+        visibility: hidden !important;
+    }
+
+    body.receipt-print-mode #receiptPreview,
+    body.receipt-print-mode #receiptPreview * {
+        visibility: visible !important;
+    }
+
+    body.receipt-print-mode #receiptPreview {
+        position: fixed !important;
+        inset: 0 auto auto 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    body.receipt-print-mode #receiptPreview .hide-in-pdf,
+    body.receipt-print-mode #receiptPreview .btn-delete-row {
+        display: none !important;
+    }
+
+    body.invoice-print-mode * {
+        visibility: hidden !important;
+    }
+
+    body.invoice-print-mode #invoicePreview,
+    body.invoice-print-mode #invoicePreview * {
+        visibility: visible !important;
+    }
+
+    body.invoice-print-mode #invoicePreview {
+        position: fixed !important;
+        inset: 0 auto auto 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    body.invoice-print-mode #invoicePreview .hide-in-pdf {
+        display: none !important;
+    }
+
+    body.invoice-print-mode #invoicePreview .show-in-pdf-only {
+        display: inline !important;
+    }
 }
 
 /* ========== POLISH & NEW PAGES ========== */
@@ -2389,6 +2446,22 @@ h6 {
 [data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator { filter: brightness(0) invert(1); opacity: 1; }
 [data-theme="dark"] select, [data-theme="dark"] input, [data-theme="dark"] textarea { caret-color: var(--accent); }
 .receipt-template.pdf-mode .item-input { border: 0; padding: 0; background: transparent; }
+.receipt-template.pdf-mode { display: block !important; width: 740px !important; max-width: none !important; min-height: 0 !important; height: auto !important; overflow: visible !important; background: #fff !important; color: #1e293b !important; opacity: 1 !important; visibility: visible !important; transform: none !important; }
+.receipt-template.pdf-mode .receipt-items table { display: table !important; width: 100% !important; }
+.receipt-template.pdf-mode .receipt-items thead { display: table-header-group !important; }
+.receipt-template.pdf-mode .receipt-items tbody { display: table-row-group !important; }
+.receipt-template.pdf-mode .receipt-items tr { display: table-row !important; }
+.receipt-template.pdf-mode .receipt-items th,
+.receipt-template.pdf-mode .receipt-items td { display: table-cell !important; }
+.invoice-template.pdf-mode { display: block !important; width: 740px !important; max-width: none !important; min-height: 0 !important; height: auto !important; overflow: visible !important; background: #fff !important; opacity: 1 !important; visibility: visible !important; transform: none !important; }
+.invoice-template.pdf-mode .invoice-items { overflow: visible !important; }
+.invoice-template.pdf-mode .invoice-items table { display: table !important; width: 100% !important; table-layout: fixed; }
+.invoice-template.pdf-mode .invoice-items thead { display: table-header-group !important; }
+.invoice-template.pdf-mode .invoice-items tbody { display: table-row-group !important; }
+.invoice-template.pdf-mode .invoice-items tr { display: table-row !important; }
+.invoice-template.pdf-mode .invoice-items th,
+.invoice-template.pdf-mode .invoice-items td { display: table-cell !important; }
+.invoice-template.pdf-mode .show-in-pdf-only { display: inline !important; }
 
 /* Cloudinary-ready, compact blog cards. Supply imageUrl in blogPosts to render an image. */
 .blog-card { min-width: 0; }
