@@ -1822,21 +1822,197 @@ h6 {
 }
 
 .footer__bottom {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    justify-content: space-between;
-    padding: 20px 0;
+    gap: 12px;
+    padding: 18px 0;
     border-top: 1px solid var(--border);
 }
 
 .footer__copyright {
-    font-size: 0.84rem;
+    font-size: 0.78rem;
     color: var(--text-muted);
 }
 
 .footer__made-with {
-    font-size: 0.84rem;
+    justify-self: end;
+    font-size: 0.78rem;
     color: var(--text-muted);
+    white-space: nowrap;
+}
+
+/* ========== PERSONAL CONTACT CTA ========== */
+.personal-cta-section {
+    padding-top: 36px;
+}
+
+.personal-cta {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(250px, .65fr);
+    gap: 32px 56px;
+    overflow: hidden;
+    padding: clamp(28px, 5vw, 64px);
+    border: 1px solid color-mix(in srgb, var(--text-primary) 12%, transparent);
+    border-radius: 24px;
+    background:
+        radial-gradient(ellipse at 8% 0%, color-mix(in srgb, var(--accent) 15%, transparent), transparent 46%),
+        linear-gradient(135deg, color-mix(in srgb, var(--bg-secondary) 92%, var(--accent) 8%), var(--bg-secondary));
+    box-shadow: var(--shadow-lg);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+}
+
+.personal-cta__main {
+    min-width: 0;
+}
+
+.personal-cta__identity {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.personal-cta__avatar,
+.personal-cta__detail-icon,
+.personal-cta__socials a {
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    color: var(--text-primary);
+    border: 1px solid color-mix(in srgb, var(--text-primary) 16%, transparent);
+    background: color-mix(in srgb, var(--bg-secondary) 74%, transparent);
+}
+
+.personal-cta__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    color: var(--accent-text);
+}
+
+.personal-cta__avatar svg {
+    width: 25px;
+    height: 25px;
+}
+
+.personal-cta__identity strong,
+.personal-cta__identity small,
+.personal-cta__detail small,
+.personal-cta__detail strong {
+    display: block;
+}
+
+.personal-cta__identity strong {
+    color: var(--text-primary);
+    font-size: .96rem;
+}
+
+.personal-cta__identity small,
+.personal-cta__detail small {
+    color: var(--text-secondary);
+    font-size: .82rem;
+}
+
+.personal-cta__eyebrow {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--accent-text);
+    font-family: var(--font-mono);
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+}
+
+.personal-cta__main h2 {
+    margin-bottom: 14px;
+    color: var(--text-primary);
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1.18;
+}
+
+.personal-cta__bio {
+    max-width: 660px;
+    color: var(--text-secondary);
+    font-size: 1.06rem;
+    line-height: 1.75;
+}
+
+.personal-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.personal-cta__actions .btn--secondary {
+    color: var(--text-primary);
+    border-color: color-mix(in srgb, var(--text-primary) 18%, transparent);
+}
+
+.personal-cta__contact {
+    align-self: center;
+    padding-left: 40px;
+    border-left: 1px solid color-mix(in srgb, var(--text-primary) 16%, transparent);
+}
+
+.personal-cta__contact h3 {
+    margin-bottom: 20px;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+}
+
+.personal-cta__detail {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 16px 0;
+}
+
+.personal-cta__detail-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+}
+
+.personal-cta__detail-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.personal-cta__detail strong {
+    color: var(--text-primary);
+    font-size: .94rem;
+    overflow-wrap: anywhere;
+}
+
+.personal-cta__socials {
+    display: flex;
+    grid-column: 1 / -1;
+    gap: 12px;
+    padding-top: 24px;
+    border-top: 1px solid color-mix(in srgb, var(--text-primary) 16%, transparent);
+}
+
+.personal-cta__socials a {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+}
+
+.personal-cta__socials a:hover {
+    color: var(--accent-text);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    transform: translateY(-2px);
+}
+
+.personal-cta__socials svg {
+    width: 22px;
+    height: 22px;
 }
 
 /* ========== ANIMATIONS ========== */
@@ -2213,9 +2389,15 @@ h6 {
     }
 
     .footer__bottom {
+        grid-template-columns: 1fr;
+        justify-items: center;
         flex-direction: column;
         gap: 8px;
         text-align: center;
+    }
+
+    .footer__made-with {
+        justify-self: center;
     }
 
     .tabs {
@@ -2409,8 +2591,8 @@ h6 {
 .legal-page__content section { padding: 24px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius-lg); }
 .legal-page__content h2 { font-size: 1.15rem; margin-bottom: 8px; }
 .legal-page__content p { color: var(--text-secondary); line-height: 1.75; }
-.footer__bottom-links { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
-.footer__bottom-links .footer__link { display: inline; padding: 0; font-size: .84rem; }
+.footer__bottom-links { display: flex; justify-content: center; align-items: center; gap: 18px; flex-wrap: wrap; }
+.footer__bottom-links .footer__link { display: inline; padding: 0; font-size: .78rem; }
 .header__nav .nav-icon, .mobile-nav .nav-icon { display: none; }
 .calculators-hub-container { width: min(100% - 48px, 1240px); }
 .calculators-hub-container > .page-hero { max-width: 780px; margin-bottom: 52px; }
@@ -2555,6 +2737,8 @@ h6 {
 @media (max-width: 860px) {
     .contact-layout { grid-template-columns: minmax(0, 1fr); }
     .contact-aside { position: static; }
+    .personal-cta { grid-template-columns: minmax(0, 1fr); }
+    .personal-cta__contact { padding: 24px 0 0; border-top: 1px solid color-mix(in srgb, var(--text-primary) 16%, transparent); border-left: 0; }
 }
 
 @media (max-width: 623px) {
@@ -2574,6 +2758,13 @@ h6 {
     .calculators-hub-container .calc-grid > .card .card__desc { grid-row: 2; font-size: .86rem; }
     .calculators-hub-container .calc-grid > .card::after { grid-row: 3; }
     .contact-form { padding: 20px; }
+    .personal-cta-section { padding-top: 24px; }
+    .personal-cta { gap: 24px; padding: 24px 20px; border-radius: 18px; }
+    .personal-cta__identity { margin-bottom: 22px; }
+    .personal-cta__bio { font-size: .96rem; }
+    .personal-cta__actions { align-items: stretch; flex-direction: column; }
+    .personal-cta__actions .btn { justify-content: center; }
+    .personal-cta__socials { padding-top: 20px; }
     .footer__bottom-links { justify-content: center; }
     .blog-card__image { height: auto; aspect-ratio: 2 / 1; }
     .invoice-builder { padding-top: 20px; gap: 20px; }

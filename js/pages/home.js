@@ -1,3 +1,5 @@
+import { renderPersonalCta } from './personal-cta.js';
+
 export function renderHome() {
   return `
     <div class="home-container">
@@ -163,18 +165,7 @@ export function renderHome() {
         </div>
       </section>
 
-      <!-- CTA Section -->
-      <section class="section">
-        <div class="cta-section home-cta animate-in">
-          <span class="section-label">Invoices &amp; receipts</span>
-          <h2>Ready to create your next document?</h2>
-          <p>Build a professional invoice or create a polished receipt in just a few steps.</p>
-          <div class="home-cta__actions">
-            <a href="#/invoice" class="btn btn--primary btn--lg">Create an Invoice</a>
-            <a href="#/receipt" class="btn btn--secondary btn--lg">Create a Receipt</a>
-          </div>
-        </div>
-      </section>
+      ${renderPersonalCta()}
     </div>
   `;
 }

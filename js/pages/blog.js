@@ -443,7 +443,6 @@ export function renderBlogPost(slug) {
         </main>
         <aside class="blog-post__toc"><h2>On this page</h2><nav aria-label="Article contents">${tocHtml}</nav></aside>
       </div>
-      <div class="blog-post__footer"><a href="#/blog" class="btn btn--secondary">← Back to all guides</a></div>
     </article>
   `;
 }

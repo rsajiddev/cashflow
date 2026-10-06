@@ -5,6 +5,7 @@
 
 // ========== IMPORTS ==========
 import { renderHome } from './pages/home.js';
+import { renderPersonalCta } from './pages/personal-cta.js';
 import { renderInvoice } from './pages/invoice.js';
 import { renderCalculatorsHub, renderCalculator } from './pages/calculators.js';
 import { renderBlog, renderBlogPost } from './pages/blog.js';
@@ -162,6 +163,10 @@ async function navigateTo(path) {
                 html = render404();
                 AppState.currentPage = '';
                 break;
+        }
+
+        if (page !== 'contact' && page !== '' && page !== 'home') {
+            html += renderPersonalCta();
         }
 
         mainContent.innerHTML = html;
