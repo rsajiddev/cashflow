@@ -1,3 +1,5 @@
+import { currencyOptions } from '../data/currencies.js';
+
 export function renderInvoice() {
     return `
     <div class="container" style="padding-top:32px; padding-bottom:60px;">
@@ -96,12 +98,7 @@ export function renderInvoice() {
                     <div class="form-group">
                         <label class="form-label">Currency</label>
                         <select class="form-select update-trigger" id="invCurrency">
-                            <option value="$">$ USD</option>
-                            <option value="€">€ EUR</option>
-                            <option value="£">£ GBP</option>
-                            <option value="₹">₹ INR</option>
-                            <option value="¥">¥ JPY</option>
-                            <option value="₨">₨ PKR</option>
+                            ${currencyOptions}
                         </select>
                     </div>
                 </div>
@@ -126,11 +123,11 @@ export function renderInvoice() {
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Header Row Color</label>
-                        <input type="color" class="form-color-input update-trigger" id="customHeaderBg" value="#6366F1">
+                        <div class="colour-picker-row"><input type="color" class="form-color-input colour-swatch update-trigger" id="customHeaderBg" value="#6366F1"><input class="form-input hex-input" id="customHeaderBgHex" value="#6366F1" maxlength="7" aria-label="Header row HEX colour"></div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Header Text Color</label>
-                        <input type="color" class="form-color-input update-trigger" id="customHeaderColor" value="#FFFFFF">
+                        <div class="colour-picker-row"><input type="color" class="form-color-input colour-swatch update-trigger" id="customHeaderColor" value="#FFFFFF"><input class="form-input hex-input" id="customHeaderColorHex" value="#FFFFFF" maxlength="7" aria-label="Header text HEX colour"></div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -164,6 +161,13 @@ export function renderInvoice() {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-section__title">Signature</h3>
+                <p class="form-hint">Draw a signature or upload a PNG. It will appear at the bottom of the invoice.</p>
+                <canvas id="invoiceSignatureCanvas" class="signature-canvas" width="520" height="140"></canvas>
+                <div class="signature-tools"><input id="invoiceSignatureColor" type="color" class="colour-swatch update-trigger" value="#1E293B"><button type="button" id="clearInvoiceSignature" class="btn btn--secondary btn--sm">Clear</button><label class="btn btn--secondary btn--sm">Upload PNG<input id="invoiceSignatureUpload" type="file" accept="image/png" hidden></label></div>
             </div>
 
             <!-- Notes & Terms -->
@@ -296,6 +300,8 @@ export function renderInvoice() {
                             <p id="previewTerms">Payment is due within 14 days. Please make checks payable to Your Company LLC.</p>
                         </div>
                     </div>
+
+                    <div class="invoice-signature"><span>This signature represents the user's signature for this invoice.</span><img id="previewInvoiceSignature" alt="Invoice signature"></div>
 
                     <div class="invoice-footer">
                         Generated with CashHub
@@ -521,6 +527,33 @@ window.initInvoicePage = function() {
     document.querySelectorAll('.update-trigger').forEach(el => {
         el.addEventListener('input', updatePreview);
     });
+
+    const isHex = value => /^#[0-9a-fA-F]{6}$/.test(value);
+    const syncInvoiceColour = (pickerId, hexId, source) => {
+        const value = source.value;
+        if (!isHex(value)) { source.setCustomValidity('Enter a valid HEX colour such as #6366F1'); return; }
+        source.setCustomValidity('');
+        document.getElementById(pickerId).value = value;
+        document.getElementById(hexId).value = value.toUpperCase();
+        updatePreview();
+    };
+    [['customHeaderBg', 'customHeaderBgHex'], ['customHeaderColor', 'customHeaderColorHex']].forEach(([pickerId, hexId]) => {
+        document.getElementById(pickerId)?.addEventListener('input', e => syncInvoiceColour(pickerId, hexId, e.target));
+        document.getElementById(hexId)?.addEventListener('input', e => { if (isHex(e.target.value)) syncInvoiceColour(pickerId, hexId, e.target); });
+    });
+
+    const signatureCanvas = document.getElementById('invoiceSignatureCanvas');
+    if (signatureCanvas) {
+        const signatureCtx = signatureCanvas.getContext('2d');
+        let drawing = false;
+        let signatureSource = '';
+        const signaturePoint = event => { const rect = signatureCanvas.getBoundingClientRect(); return { x: (event.clientX - rect.left) * signatureCanvas.width / rect.width, y: (event.clientY - rect.top) * signatureCanvas.height / rect.height }; };
+        signatureCanvas.addEventListener('pointerdown', event => { drawing = true; const p = signaturePoint(event); signatureCtx.beginPath(); signatureCtx.moveTo(p.x, p.y); });
+        signatureCanvas.addEventListener('pointermove', event => { if (!drawing) return; const p = signaturePoint(event); signatureCtx.strokeStyle = document.getElementById('invoiceSignatureColor').value; signatureCtx.lineWidth = 2.2; signatureCtx.lineCap = 'round'; signatureCtx.lineTo(p.x, p.y); signatureCtx.stroke(); signatureSource = signatureCanvas.toDataURL('image/png'); document.getElementById('previewInvoiceSignature').src = signatureSource; });
+        ['pointerup', 'pointerleave'].forEach(type => signatureCanvas.addEventListener(type, () => { drawing = false; }));
+        document.getElementById('clearInvoiceSignature')?.addEventListener('click', () => { signatureCtx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height); signatureSource = ''; document.getElementById('previewInvoiceSignature').removeAttribute('src'); });
+        document.getElementById('invoiceSignatureUpload')?.addEventListener('change', event => { const file = event.target.files?.[0]; if (!file) return; const reader = new FileReader(); reader.onload = result => { signatureSource = result.target.result; document.getElementById('previewInvoiceSignature').src = signatureSource; }; reader.readAsDataURL(file); });
+    }
 
     // Template Switching
     const templateOptions = document.querySelectorAll('.template-option');

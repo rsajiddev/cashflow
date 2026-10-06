@@ -10,6 +10,7 @@ import { renderCalculatorsHub, renderCalculator } from './pages/calculators.js';
 import { renderBlog, renderBlogPost } from './pages/blog.js';
 import { renderContact, initContactPage } from './pages/contact.js';
 import { renderLegalPage } from './pages/legal.js';
+import { renderReceipt, initReceiptPage } from './pages/receipt.js';
 
 // ========== APP STATE ==========
 const AppState = {
@@ -116,6 +117,11 @@ async function navigateTo(path) {
                 AppState.currentPage = 'invoice';
                 break;
 
+            case 'receipt':
+                html = renderReceipt();
+                AppState.currentPage = 'receipt';
+                break;
+
             case 'calculators':
                 html = renderCalculatorsHub();
                 AppState.currentPage = 'calculators';
@@ -166,6 +172,7 @@ async function navigateTo(path) {
                 window.initInvoicePage();
             }
         }
+        if (page === 'receipt') initReceiptPage();
         if (page === 'calculator') {
             if (typeof window.initCalculatorPage === 'function') {
                 window.initCalculatorPage(parts[1]);
@@ -179,12 +186,70 @@ async function navigateTo(path) {
             animElements.forEach((el, i) => {
                 el.style.animationDelay = `${i * 0.05}s`;
             });
+            initScrollAnimations(mainContent);
+            initCounters(mainContent);
+            if (page === 'home' || page === '') initHeroWord(mainContent);
         });
 
     } catch (err) {
         console.error('Navigation error:', err);
         mainContent.innerHTML = render404();
     }
+}
+
+function initHeroWord(root = document) {
+    const word = root.querySelector('#heroDocumentWord');
+    if (!word || word.dataset.rotating === 'true') return;
+    if (window.CashHub.heroInterval) window.clearInterval(window.CashHub.heroInterval);
+    word.dataset.rotating = 'true';
+    const words = ['Invoices', 'Receipts'];
+    let index = 0;
+    window.CashHub.heroInterval = window.setInterval(() => {
+        word.classList.add('word-changing');
+        window.setTimeout(() => {
+            index = (index + 1) % words.length;
+            word.textContent = words[index];
+            word.classList.remove('word-changing');
+        }, 220);
+    }, 3200);
+}
+
+function initScrollAnimations(root = document) {
+    root.querySelectorAll('.card, .sidebar-section, .calc-category, .blog-card').forEach(el => el.classList.add('reveal-on-scroll'));
+    const elements = root.querySelectorAll('.reveal-on-scroll, .animate-in');
+    if (!('IntersectionObserver' in window)) {
+        elements.forEach(el => el.classList.add('is-visible'));
+        return;
+    }
+    const observer = new IntersectionObserver((entries, currentObserver) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            currentObserver.unobserve(entry.target);
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px' });
+    elements.forEach((el, index) => {
+        el.style.setProperty('--reveal-delay', `${Math.min(index * 45, 360)}ms`);
+        observer.observe(el);
+    });
+}
+
+function initCounters(root = document) {
+    root.querySelectorAll('[data-counter]').forEach(counter => {
+        if (counter.dataset.counted === 'true') return;
+        counter.dataset.counted = 'true';
+        const target = Number(counter.dataset.counter) || 0;
+        const suffix = counter.dataset.suffix || '';
+        const start = performance.now();
+        const duration = 1000;
+        const tick = now => {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            counter.textContent = `${Math.round(target * eased)}${suffix}`;
+            if (progress < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+    });
 }
 
 function render404() {
