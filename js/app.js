@@ -28,8 +28,7 @@ function initTheme() {
     } else {
         // Check system preference
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = prefersDark ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', theme);
+        const theme = prefersDark ? 'dark' : 'light';        document.documentElement.setAttribute('data-theme', theme);
         AppState.theme = theme;
     }
 }
