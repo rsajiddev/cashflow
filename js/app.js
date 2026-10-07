@@ -170,6 +170,7 @@ async function navigateTo(path) {
         }
 
         mainContent.innerHTML = html;
+        requestAnimationFrame(updateScrollProgress);
 
         // Re-run page-specific initialization after rendering
         if (page === 'invoice' || page === '') {
@@ -392,13 +393,53 @@ function closeMobileMenu() {
 // ========== HEADER SCROLL EFFECT ==========
 function initHeaderScroll() {
     const header = document.getElementById('header');
-    let lastScroll = 0;
+    const updateHeader = () => {
+        header?.classList.toggle('scrolled', window.scrollY > 10);
+    };
 
-    window.addEventListener('scroll', () => {
-        const scrollY = window.scrollY;
-        header.classList.toggle('scrolled', scrollY > 10);
-        lastScroll = scrollY;
-    }, { passive: true });
+    window.addEventListener('scroll', updateHeader, { passive: true });
+    updateHeader();
+}
+
+// ========== GLOBAL PAGE SCROLL PROGRESS ==========
+let scrollProgressFrame = 0;
+
+function updateScrollProgress() {
+    const progress = document.getElementById('scrollProgress');
+    const fill = document.getElementById('scrollProgressFill');
+    if (!progress || !fill) return;
+
+    const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const percentage = scrollableHeight > 0
+        ? Math.min(100, Math.max(0, (window.scrollY / scrollableHeight) * 100))
+        : 0;
+
+    fill.style.height = `${percentage}%`;
+    progress.setAttribute('aria-valuenow', String(Math.round(percentage)));
+}
+
+function scheduleScrollProgressUpdate() {
+    if (scrollProgressFrame) return;
+
+    scrollProgressFrame = window.requestAnimationFrame(() => {
+        scrollProgressFrame = 0;
+        updateScrollProgress();
+    });
+}
+
+function initScrollProgress() {
+    window.addEventListener('scroll', scheduleScrollProgressUpdate, { passive: true });
+    window.addEventListener('resize', scheduleScrollProgressUpdate);
+
+    const mainContent = document.getElementById('mainContent');
+    const footer = document.querySelector('.footer');
+    if ('ResizeObserver' in window) {
+        const observer = new ResizeObserver(scheduleScrollProgressUpdate);
+        if (mainContent) observer.observe(mainContent);
+        if (footer) observer.observe(footer);
+    }
+
+    updateScrollProgress();
 }
 
 // ========== SCROLL TO TOP BUTTON ==========
@@ -431,6 +472,9 @@ function init() {
 
     // Init header scroll
     initHeaderScroll();
+
+    // Init global scroll progress
+    initScrollProgress();
 
     // Init scroll to top
     initScrollToTop();
