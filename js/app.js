@@ -94,6 +94,10 @@ async function navigateTo(path) {
     const parts = parseRoute(path);
     const page = parts[0] || 'home';
     document.body.classList.toggle('detail-hero-page', page === 'calculator' || (page === 'blog' && Boolean(parts[1])));
+    document.body.classList.toggle('route-home', page === 'home' || page === '');
+    document.body.classList.toggle('route-blog-index', page === 'blog' && !parts[1]);
+    document.body.classList.toggle('route-blog-detail', page === 'blog' && Boolean(parts[1]));
+    document.body.classList.toggle('route-calculator-detail', page === 'calculator');
 
     // Update active nav links
     updateActiveNav(page);

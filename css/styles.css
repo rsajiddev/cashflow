@@ -357,12 +357,12 @@ h6 {
 }
 
 /* Detail-page heroes continue behind the unchanged floating navbar. */
-body.detail-hero-page #mainContent > .blog-post,
-body.detail-hero-page #mainContent > .calculator-detail-page {
+body.detail-hero-page #mainContent>.blog-post,
+body.detail-hero-page #mainContent>.calculator-detail-page {
     margin-top: calc(var(--header-height) * -1);
 }
 
-body.detail-hero-page #mainContent > .blog-post > .blog-post__hero,
+body.detail-hero-page #mainContent>.blog-post>.blog-post__hero,
 body.detail-hero-page .calculator-detail__hero {
     padding-top: calc(32px + var(--header-height));
 }
@@ -1139,7 +1139,7 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
     background: radial-gradient(circle at 18% 20%, rgba(99, 102, 241, .10), transparent 32%), radial-gradient(circle at 82% 24%, rgba(139, 92, 246, .09), transparent 30%), linear-gradient(180deg, var(--bg-primary), var(--bg-tertiary));
 }
 
-.home-container > .hero {
+.home-container>.hero {
     margin-top: calc(var(--header-height) * -1);
     padding-top: calc(80px + var(--header-height));
 }
@@ -2070,8 +2070,13 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
 }
 
 /* ========== PERSONAL CONTACT CTA ========== */
-.personal-cta-section {
+.section.personal-cta-section {
     padding-top: 36px;
+}
+
+#mainContent>.home-container>.home-faq,
+#mainContent>.blog-page {
+    padding-bottom: 0;
 }
 
 .personal-cta {
@@ -2377,7 +2382,7 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
         padding: 60px 0 40px;
     }
 
-    .home-container > .hero {
+    .home-container>.hero {
         padding-top: calc(60px + var(--header-height));
     }
 
@@ -2479,7 +2484,7 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
         padding: 36px 0 28px;
     }
 
-    .home-container > .hero {
+    .home-container>.hero {
         padding-top: calc(36px + var(--header-height));
     }
 
@@ -3872,7 +3877,7 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
         padding: 20px;
     }
 
-    .personal-cta-section {
+    .section.personal-cta-section {
         padding-top: 24px;
     }
 
@@ -4776,7 +4781,7 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
     padding: 0 0 24px;
 }
 
-.calculator-detail-page > .container {
+.calculator-detail-page>.container {
     width: min(100% - 48px, 1280px);
     max-width: none;
     margin: 0 auto;
@@ -4833,29 +4838,51 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
 }
 
 .calculator-detail__decoration--three {
-    top: 19%; left: 12%; font-size: clamp(3.5rem, 7vw, 6rem);
-    animation-duration: 14s; animation-delay: -7s;
+    top: 19%;
+    left: 12%;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    animation-duration: 14s;
+    animation-delay: -7s;
 }
+
 .calculator-detail__decoration--four {
-    right: 12%; bottom: 18%; font-size: clamp(2.5rem, 5vw, 4.5rem);
-    animation-duration: 12s; animation-delay: -2s;
+    right: 12%;
+    bottom: 18%;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    animation-duration: 12s;
+    animation-delay: -2s;
 }
+
 .calculator-detail__decoration--five {
-    top: 22%; right: 37%; font-size: clamp(2rem, 4vw, 3.5rem);
-    animation-duration: 15s; animation-delay: -9s;
+    top: 22%;
+    right: 37%;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    animation-duration: 15s;
+    animation-delay: -9s;
 }
+
 .calculator-detail__decoration--six {
-    bottom: 16%; left: 31%; font-size: clamp(2.25rem, 4.5vw, 4rem);
-    animation-duration: 13s; animation-delay: -5s;
+    bottom: 16%;
+    left: 31%;
+    font-size: clamp(2.25rem, 4.5vw, 4rem);
+    animation-duration: 13s;
+    animation-delay: -5s;
 }
 
 @keyframes calculator-math-drift {
-    from { transform: translate3d(-7px, 8px, 0) rotate(-8deg); }
-    to { transform: translate3d(10px, -12px, 0) rotate(9deg); }
+    from {
+        transform: translate3d(-7px, 8px, 0) rotate(-8deg);
+    }
+
+    to {
+        transform: translate3d(10px, -12px, 0) rotate(9deg);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .calculator-detail__decoration { animation: none; }
+    .calculator-detail__decoration {
+        animation: none;
+    }
 }
 
 .calculator-detail__layout {
@@ -4950,7 +4977,7 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
 }
 
 @media (max-width: 620px) {
-    .calculator-detail-page > .container {
+    .calculator-detail-page>.container {
         width: calc(100% - 32px);
     }
 
@@ -4983,7 +5010,7 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
         flex-wrap: wrap;
     }
 
-    .calculator-detail__calculator .line-item > * {
+    .calculator-detail__calculator .line-item>* {
         min-width: 0;
     }
 }
@@ -5003,7 +5030,7 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
     font-size: clamp(1.2rem, 2vw, 1.55rem);
 }
 
-.calculator-guide-card > p {
+.calculator-guide-card>p {
     color: var(--text-secondary);
     line-height: 1.7;
 }
@@ -5015,7 +5042,7 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
     margin-top: 18px;
 }
 
-.calculator-guide-card__steps > div {
+.calculator-guide-card__steps>div {
     display: flex;
     align-items: flex-start;
     gap: 10px;
@@ -5059,7 +5086,7 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
     font-weight: 700;
 }
 
-.calc-import-actions > p:not(.calc-import-actions__title) {
+.calc-import-actions>p:not(.calc-import-actions__title) {
     margin-bottom: 14px;
     color: var(--text-secondary);
     font-size: .9rem;
@@ -5084,7 +5111,7 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
     opacity: 1;
 }
 
-.blog-faq__answer > div {
+.blog-faq__answer>div {
     min-height: 0;
     overflow: hidden;
 }
@@ -5286,8 +5313,8 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
 }
 
 /* Keep the detail-page contact CTA consistently spaced from its final content card. */
-body.detail-hero-page #mainContent > .blog-post,
-body.detail-hero-page #mainContent > .calculator-detail-page {
+body.detail-hero-page #mainContent>.blog-post,
+body.detail-hero-page #mainContent>.calculator-detail-page {
     padding-bottom: 0;
 }
 
@@ -5295,12 +5322,48 @@ body.detail-hero-page .calculator-detail-page .calculator-guide-card {
     margin-bottom: 0;
 }
 
-body.detail-hero-page #mainContent > .personal-cta-section {
-    padding-top: 24px;
+/* Match the CTA's outer edges to the content width used on each route.
+   The generic .container max-width (1200px) was narrower than every target section. */
+body.route-home .home-container > .personal-cta-section > .container {
+    width: min(100% - 48px, 1240px);
+    max-width: none;
+    padding: 0;
 }
 
-body.detail-hero-page #mainContent > .calculator-detail-page + .personal-cta-section {
-    padding-top: 8px;
+body.route-blog-index #mainContent > .personal-cta-section > .container {
+    width: min(
+        calc(100% - var(--container-padding) - var(--container-padding)),
+        calc(1320px - var(--container-padding) - var(--container-padding))
+    );
+    max-width: none;
+    padding: 0;
+}
+
+body.route-blog-detail #mainContent > .personal-cta-section > .container,
+body.route-calculator-detail #mainContent > .personal-cta-section > .container {
+    width: min(100% - 48px, 1280px);
+    max-width: none;
+    padding: 0;
+}
+
+body.route-calculator-detail #mainContent > .personal-cta-section > .container {
+    width: min(
+        calc(100% - 48px - var(--container-padding) - var(--container-padding)),
+        calc(1280px - var(--container-padding) - var(--container-padding))
+    );
+}
+
+@media (max-width: 628px) {
+    body.route-home .home-container > .personal-cta-section > .container,
+    body.route-blog-detail #mainContent > .personal-cta-section > .container {
+        width: calc(100% - 32px);
+    }
+}
+
+@media (max-width: 620px) {
+    body.route-calculator-detail #mainContent > .personal-cta-section > .container {
+        width: calc(100% - 32px - var(--container-padding) - var(--container-padding));
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
