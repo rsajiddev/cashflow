@@ -2070,6 +2070,9 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
     color: var(--text-muted);
     white-space: nowrap;
 }
+.footer__made-with_company:hover {
+    color: var(--accent);
+}
 
 /* ========== PERSONAL CONTACT CTA ========== */
 .section.personal-cta-section {
