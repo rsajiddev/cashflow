@@ -1334,6 +1334,17 @@ h6 {
     align-items: flex-start;
 }
 
+.invoice-header__left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+}
+
+.invoice-header__left h2 {
+    margin: 0;
+}
+
 .invoice-header__left h1 {
     font-size: 2rem;
     font-weight: 800;
@@ -4048,6 +4059,50 @@ h6 {
     mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
 }
 
+.hero-wave {
+    width: 100%;
+    height: clamp(34px, 5vw, 64px);
+    margin: 28px 0 8px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.hero-wave svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.hero-wave path {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    opacity: .7;
+}
+
+.hero-wave .hero-wave__echo {
+    stroke-width: 1.2;
+    opacity: .3;
+}
+
+.hero-use-intro {
+    width: min(100% - 48px, 1000px);
+    margin: 0 auto 18px;
+    text-align: center;
+}
+
+.hero-use-intro h2 {
+    margin-bottom: 4px;
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+}
+
+.hero-use-intro p {
+    color: var(--text-secondary);
+    font-size: .88rem;
+}
+
 .hero-use-strip__track {
     display: flex;
     width: max-content;
@@ -4286,6 +4341,47 @@ h6 {
     border-top: 8px solid var(--receipt-accent);
 }
 
+.receipt-preview__seller {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+}
+
+.company-logo-upload {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.company-logo-upload .form-label {
+    flex-basis: 100%;
+    margin-bottom: 0;
+}
+
+.company-logo-upload__button {
+    position: relative;
+    overflow: hidden;
+}
+
+.company-logo-preview {
+    display: block;
+    width: 104px;
+    height: 72px;
+    flex: 0 0 auto;
+    object-fit: contain;
+    object-position: left center;
+}
+
+.company-logo-preview[hidden] {
+    display: none !important;
+}
+
+.invoice-sidebar .sidebar-section.invoice-signature-notes {
+    grid-column: 2;
+}
+
 .receipt-kicker,
 .receipt-preview__parties span,
 .receipt-preview__notes>span {
@@ -4473,6 +4569,14 @@ h6 {
         width: calc(100% - 32px);
     }
 
+    .hero-use-intro {
+        width: calc(100% - 32px);
+    }
+
+    .hero-wave {
+        margin-top: 20px;
+    }
+
     .hero-shape--one {
         left: 2%;
     }
@@ -4502,6 +4606,12 @@ h6 {
     .receipt-signature {
         padding-left: 18px;
         padding-right: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-wave animate {
+        display: none;
     }
 }
 

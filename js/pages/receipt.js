@@ -16,6 +16,7 @@ export function renderReceipt() {
         <div class="sidebar-section"><h3 class="sidebar-section__title">Seller & customer</h3>
           <div class="form-group"><label class="form-label">Business / seller</label><input id="recSeller" class="form-input rec-trigger" value="Your Company LLC"></div>
           <div class="form-group"><label class="form-label">Seller contact</label><input id="recSellerContact" class="form-input rec-trigger" value="hello@yourcompany.com"></div>
+          <div class="form-group company-logo-upload"><label class="form-label" for="receiptLogoUpload">Company logo</label><label class="btn btn--secondary btn--sm company-logo-upload__button">Choose logo<input id="receiptLogoUpload" type="file" accept="image/png,image/jpeg,image/webp" hidden></label><span class="form-hint" id="receiptLogoStatus" role="status">PNG, JPG or WebP · up to 600 KB</span></div>
           <div class="form-group"><label class="form-label">Customer</label><input id="recCustomer" class="form-input rec-trigger" value="Customer Name"></div>
         </div>
         <div class="sidebar-section"><h3 class="sidebar-section__title">Appearance</h3>
@@ -29,7 +30,7 @@ export function renderReceipt() {
         </div>
         <div class="sidebar-section"><div class="form-group"><label class="form-label">Notes</label><textarea id="recNotes" class="form-textarea rec-trigger">Thank you for your business.</textarea></div></div>
       </aside>
-      <main class="receipt-preview-area"><div class="invoice-actions"><div class="invoice-actions__left"><span class="badge">Receipt Preview</span></div><div class="invoice-actions__right"><button type="button" id="recAddRow" class="btn btn--secondary btn--sm">+ Add item</button><button id="btnDownloadReceipt" class="btn btn--primary">Download PDF</button></div></div><div id="receiptPreview" class="receipt-template"><header class="receipt-preview__header"><div><span class="receipt-kicker">PAYMENT RECEIPT</span><h2 id="recPreviewSeller">Your Company LLC</h2><p id="recPreviewSellerContact">hello@yourcompany.com</p></div><div class="receipt-preview__number"><strong id="recPreviewNumber">REC-001</strong><span id="recPreviewDate">${today}</span></div></header><div class="receipt-preview__parties"><div><span>RECEIVED FROM</span><strong id="recPreviewCustomer">Customer Name</strong></div><div><span>PAYMENT</span><strong id="recPreviewPayment">Cash · Paid</strong></div></div><div class="receipt-items"><table><thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead><tbody id="receiptItemsBody"></tbody></table></div><div class="receipt-summary"><div><span>Subtotal</span><strong id="recPreviewSubtotal">$0.00</strong></div><div><span>Tax</span><strong id="recPreviewTax">$0.00</strong></div><div><span>Discount</span><strong id="recPreviewDiscount">-$0.00</strong></div><div class="receipt-total"><span>Total paid</span><strong id="recPreviewTotal">$0.00</strong></div></div><div class="receipt-preview__notes"><span>Notes</span><p id="recPreviewNotes">Thank you for your business.</p></div><div class="receipt-signature"><span>This signature represents the user's signature for this receipt.</span><img id="recPreviewSignature" alt="Receipt signature"></div><footer>Generated with CashHub · Keep this receipt for your records.</footer></div></main>
+      <main class="receipt-preview-area"><div class="invoice-actions"><div class="invoice-actions__left"><span class="badge">Receipt Preview</span></div><div class="invoice-actions__right"><button type="button" id="recAddRow" class="btn btn--secondary btn--sm">+ Add item</button><button id="btnDownloadReceipt" class="btn btn--primary">Download PDF</button></div></div><div id="receiptPreview" class="receipt-template"><header class="receipt-preview__header"><div class="receipt-preview__seller"><img id="recPreviewLogo" class="company-logo-preview" alt="Company logo" hidden><div><span class="receipt-kicker">PAYMENT RECEIPT</span><h2 id="recPreviewSeller">Your Company LLC</h2><p id="recPreviewSellerContact">hello@yourcompany.com</p></div></div><div class="receipt-preview__number"><strong id="recPreviewNumber">REC-001</strong><span id="recPreviewDate">${today}</span></div></header><div class="receipt-preview__parties"><div><span>RECEIVED FROM</span><strong id="recPreviewCustomer">Customer Name</strong></div><div><span>PAYMENT</span><strong id="recPreviewPayment">Cash · Paid</strong></div></div><div class="receipt-items"><table><thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead><tbody id="receiptItemsBody"></tbody></table></div><div class="receipt-summary"><div><span>Subtotal</span><strong id="recPreviewSubtotal">$0.00</strong></div><div><span>Tax</span><strong id="recPreviewTax">$0.00</strong></div><div><span>Discount</span><strong id="recPreviewDiscount">-$0.00</strong></div><div class="receipt-total"><span>Total paid</span><strong id="recPreviewTotal">$0.00</strong></div></div><div class="receipt-preview__notes"><span>Notes</span><p id="recPreviewNotes">Thank you for your business.</p></div><div class="receipt-signature"><span>This signature represents the user's signature for this receipt.</span><img id="recPreviewSignature" alt="Receipt signature"></div><footer>Generated with CashHub · Keep this receipt for your records.</footer></div></main>
     </div></div></section>`;
 }
 
@@ -37,6 +38,7 @@ export function initReceiptPage() {
   let items = [{ desc: 'Professional service', qty: 1, price: 250 }, { desc: 'Additional support', qty: 1, price: 50 }];
   let customColumns = [];
   let nextCustomColumnId = 1;
+  let receiptLogoSource = '';
   const $ = id => document.getElementById(id);
   const preview = $('receiptPreview');
   const format = value => `${$('recCurrency').value}${Number(value || 0).toFixed(2)}`;
@@ -109,6 +111,9 @@ export function initReceiptPage() {
     const color = $('recColor').value;
     preview.style.setProperty('--receipt-accent', color);
     $('recPreviewSeller').textContent = $('recSeller').value || ' ';
+    const logo = $('recPreviewLogo');
+    logo.hidden = !receiptLogoSource;
+    if (receiptLogoSource && logo.src !== receiptLogoSource) logo.src = receiptLogoSource;
     $('recPreviewSellerContact').textContent = $('recSellerContact').value || ' ';
     $('recPreviewCustomer').textContent = $('recCustomer').value || ' ';
     $('recPreviewNumber').textContent = $('recNumber').value || ' ';
@@ -130,6 +135,31 @@ export function initReceiptPage() {
   }
   document.querySelectorAll('.rec-trigger').forEach(el => el.addEventListener('input', e => e.target.id === 'recColor' ? syncColour(e.target) : updatePreview()));
   $('recColorHex').addEventListener('input', e => { if (validHex(e.target.value)) syncColour(e.target); });
+  $('receiptLogoUpload').addEventListener('change', e => {
+    const input = e.currentTarget;
+    const file = input.files?.[0];
+    if (!file) return;
+    const acceptedTypes = ['image/png', 'image/jpeg', 'image/webp'];
+    const supported = file.type ? acceptedTypes.includes(file.type) : /\.(png|jpe?g|webp)$/i.test(file.name);
+    if (!supported) {
+      $('receiptLogoStatus').textContent = 'Choose a PNG, JPG or WebP image.';
+      input.value = '';
+      return;
+    }
+    if (file.size > 600 * 1024) {
+      $('receiptLogoStatus').textContent = 'Logo must be 600 KB or smaller.';
+      input.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      receiptLogoSource = reader.result;
+      $('receiptLogoStatus').textContent = `Logo added · ${file.name}`;
+      updatePreview();
+    };
+    reader.onerror = () => { $('receiptLogoStatus').textContent = 'Could not read this image. Please try another file.'; };
+    reader.readAsDataURL(file);
+  });
   $('recCustomColumnForm').addEventListener('submit', event => {
     event.preventDefault();
     const input = $('recCustomColumnTitle');

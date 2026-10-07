@@ -30,6 +30,20 @@ export function renderHome() {
             </div>
           </div>
         </div>
+        <div class="hero-wave" aria-hidden="true">
+          <svg viewBox="0 0 1440 72" preserveAspectRatio="none" focusable="false">
+            <path d="M1440 12 C1180 64 1010 64 760 38 S300 5 0 58">
+              <animate attributeName="d" dur="6s" repeatCount="indefinite" values="M1440 12 C1180 64 1010 64 760 38 S300 5 0 58;M1440 36 C1180 4 1010 12 760 50 S300 70 0 24;M1440 12 C1180 64 1010 64 760 38 S300 5 0 58" />
+            </path>
+            <path class="hero-wave__echo" d="M1440 25 C1180 70 1010 68 760 48 S300 18 0 68">
+              <animate attributeName="d" dur="8s" repeatCount="indefinite" values="M1440 25 C1180 70 1010 68 760 48 S300 18 0 68;M1440 55 C1180 25 1010 18 760 60 S300 80 0 42;M1440 25 C1180 70 1010 68 760 48 S300 18 0 68" />
+            </path>
+          </svg>
+        </div>
+        <div class="hero-use-intro">
+          <h2>Who can use CashHub?</h2>
+          <p>A simple billing toolkit for independent professionals, growing teams, and everyday businesses.</p>
+        </div>
         <div class="hero-use-strip" aria-label="CashHub use cases"><div class="hero-use-strip__track"><span>Freelancers</span><span>Agencies</span><span>Retail stores</span><span>Consultants</span><span>Bookshops</span><span>Restaurants</span><span>Contractors</span><span>Online sellers</span><span>College projects</span><span>Small businesses</span><span>Freelancers</span><span>Agencies</span><span>Retail stores</span><span>Consultants</span><span>Bookshops</span><span>Restaurants</span><span>Contractors</span><span>Online sellers</span><span>College projects</span><span>Small businesses</span></div></div>
       </section>
 

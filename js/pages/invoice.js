@@ -63,6 +63,11 @@ export function renderInvoice() {
                     <label class="form-label">Your Phone</label>
                     <input type="text" class="form-input update-trigger" id="bizPhone" value="(555) 123-4567" placeholder="(555) 123-4567">
                 </div>
+                <div class="form-group company-logo-upload">
+                    <label class="form-label" for="invoiceLogoUpload">Company logo</label>
+                    <label class="btn btn--secondary btn--sm company-logo-upload__button">Choose logo<input type="file" id="invoiceLogoUpload" accept="image/png,image/jpeg,image/webp" hidden></label>
+                    <span class="form-hint" id="invoiceLogoStatus" role="status">PNG, JPG or WebP · up to 600 KB</span>
+                </div>
             </div>
 
             <!-- Client Details -->
@@ -183,7 +188,7 @@ export function renderInvoice() {
                 </div>
             </div>
 
-            <div class="sidebar-section">
+            <div class="sidebar-section invoice-signature-notes">
                 <h3 class="sidebar-section__title">Signature & Notes</h3>
                 <p class="form-hint">Draw a signature or upload a PNG. It will appear at the bottom of the invoice.</p>
                 <canvas id="invoiceSignatureCanvas" class="signature-canvas" width="520" height="140"></canvas>
@@ -228,6 +233,7 @@ export function renderInvoice() {
                 <div id="invoicePreview" class="invoice-template template-classic" style="font-size: 14px; background: white; color: #1e293b;">
                     <div class="invoice-header">
                         <div class="invoice-header__left">
+                            <img id="previewBizLogo" class="company-logo-preview" alt="Company logo" hidden>
                             <h2 class="invoice-biz-name" id="previewBizName">Your Company LLC</h2>
                         </div>
                         <div class="invoice-header__right">
@@ -398,6 +404,7 @@ window.initInvoicePage = function () {
     }
 
     let currentCurrency = '$';
+    let invoiceLogoSource = '';
     let customColumns = [];
     let nextCustomColumnId = 1;
 
@@ -517,6 +524,9 @@ window.initInvoicePage = function () {
         // Business
         document.getElementById('previewBizName').textContent = document.getElementById('bizName').value || ' ';
         document.getElementById('previewBizNameDetails').textContent = document.getElementById('bizName').value || ' ';
+        const logoPreview = document.getElementById('previewBizLogo');
+        logoPreview.hidden = !invoiceLogoSource;
+        if (invoiceLogoSource && logoPreview.src !== invoiceLogoSource) logoPreview.src = invoiceLogoSource;
         document.getElementById('previewBizAddress').innerHTML = (document.getElementById('bizAddress').value || ' ').replace(/\\n/g, '<br>');
 
         const phone = document.getElementById('bizPhone').value;
@@ -653,6 +663,33 @@ window.initInvoicePage = function () {
         el.addEventListener('input', updatePreview);
     });
 
+    document.getElementById('invoiceLogoUpload')?.addEventListener('change', event => {
+        const input = event.currentTarget;
+        const file = input.files?.[0];
+        const status = document.getElementById('invoiceLogoStatus');
+        if (!file) return;
+        const acceptedTypes = ['image/png', 'image/jpeg', 'image/webp'];
+        const supported = file.type ? acceptedTypes.includes(file.type) : /\.(png|jpe?g|webp)$/i.test(file.name);
+        if (!supported) {
+            status.textContent = 'Choose a PNG, JPG or WebP image.';
+            input.value = '';
+            return;
+        }
+        if (file.size > 600 * 1024) {
+            status.textContent = 'Logo must be 600 KB or smaller.';
+            input.value = '';
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = () => {
+            invoiceLogoSource = reader.result;
+            status.textContent = `Logo added · ${file.name}`;
+            updatePreview();
+        };
+        reader.onerror = () => { status.textContent = 'Could not read this image. Please try another file.'; };
+        reader.readAsDataURL(file);
+    });
+
     const isHex = value => /^#[0-9a-fA-F]{6}$/.test(value);
     const syncInvoiceColour = (pickerId, hexId, source) => {
         const value = source.value;
@@ -766,6 +803,9 @@ window.initInvoicePage = function () {
             document.getElementById('bizAddress').value = '123 Business St\\nCity, State 12345';
             document.getElementById('bizEmail').value = 'hello@yourcompany.com';
             document.getElementById('bizPhone').value = '(555) 123-4567';
+            invoiceLogoSource = '';
+            document.getElementById('invoiceLogoUpload').value = '';
+            document.getElementById('invoiceLogoStatus').textContent = 'PNG, JPG or WebP · up to 600 KB';
 
             document.getElementById('clientName').value = 'Client Name';
             document.getElementById('clientAddress').value = '456 Client Rd\\nCity, State 67890';
