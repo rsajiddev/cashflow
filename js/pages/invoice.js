@@ -3,9 +3,10 @@ import { currencyOptions } from '../data/currencies.js';
 export function renderInvoice() {
     return `
     <div class="container" style="padding-top:32px; padding-bottom:60px;">
-    <div style="margin-bottom:24px;">
-        <h1 class="section-title">Invoice Generator</h1>
-        <p class="section-desc">Create professional invoices, customize templates, and download as PDF.</p>
+    <div class="page-hero page-hero--center animate-in">
+    <span class="section-label">CashHub invoices</span>
+    <h1 class="section-title">Invoice Generator</h1>
+    <p class="section-desc">Create a polished, itemized invoice with editable business and client details, flexible line items, tax and discount calculations, customizable columns, and a live preview. Choose your style, add payment terms or notes, then download a professional PDF ready to share.</p>
     </div>
     
     <div class="invoice-builder">
@@ -171,41 +172,35 @@ export function renderInvoice() {
                         </div>
                     </div>
                 </div>
+                <div class="custom-column-tools">
+                    <label class="form-label" for="invCustomColumnTitle">Add a custom item column</label>
+                    <form id="invCustomColumnForm" class="custom-column-add">
+                        <input type="text" class="form-input" id="invCustomColumnTitle" maxlength="32" placeholder="e.g. SKU or Hours" required>
+                        <button type="submit" class="btn btn--secondary btn--sm">Add column</button>
+                    </form>
+                    <p class="form-hint">Add details such as SKU, hours, or project code. Give each item its own value.</p>
+                    <div id="invCustomColumnList" class="custom-column-list"></div>
+                </div>
             </div>
 
             <div class="sidebar-section">
-                <h3 class="sidebar-section__title">Signature</h3>
+                <h3 class="sidebar-section__title">Signature & Notes</h3>
                 <p class="form-hint">Draw a signature or upload a PNG. It will appear at the bottom of the invoice.</p>
                 <canvas id="invoiceSignatureCanvas" class="signature-canvas" width="520" height="140"></canvas>
                 <div class="signature-tools"><input id="invoiceSignatureColor" type="color" class="colour-swatch update-trigger" value="#1E293B"><button type="button" id="clearInvoiceSignature" class="btn btn--secondary btn--sm">Clear</button><label class="btn btn--secondary btn--sm">Upload PNG<input id="invoiceSignatureUpload" type="file" accept="image/png" hidden></label></div>
-            </div>
-
-            <!-- Notes & Terms -->
-            <div class="sidebar-section">
-                <h3 class="sidebar-section__title">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                    Notes & Terms
-                </h3>
-                <div class="form-group">
-                    <label class="form-label">Notes to Client</label>
-                    <textarea class="form-textarea update-trigger" id="invNotes" placeholder="Thank you for your business.">Thank you for your business.</textarea>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Terms & Conditions</label>
-                    <textarea class="form-textarea update-trigger" id="invTerms" placeholder="Payment is due within 14 days.">Payment is due within 14 days. Please make checks payable to Your Company LLC.</textarea>
-                </div>
-            </div>
-
-            <!-- Professional Invoicing Tips -->
-            <div class="sidebar-section" style="background:var(--accent-soft); border:1px solid var(--accent); border-radius:var(--radius-lg);">
-                <h3 class="sidebar-section__title" style="color:var(--accent);">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                    Invoice Pro Tips
-                </h3>
-                <div style="font-size:0.82rem; color:var(--text-secondary); line-height:1.6;">
-                    <p style="margin-bottom:8px;">💡 <strong>Faster Payments:</strong> Invoices with Net 14 or Net 7 terms get settled 43% faster than standard Net 30 terms.</p>
-                    <p style="margin-bottom:8px;">💡 <strong>Clear Scope:</strong> Itemize deliverables with specific hours or milestones to eliminate client disputes.</p>
-                    <p>💡 <strong>Late Penalties:</strong> Always include standard 1.5% - 2% monthly late fees in your terms to prioritize cash flow.</p>
+                <div class="invoice-sidebar-notes">
+                    <h4 class="sidebar-section__title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        Notes & Terms
+                    </h4>
+                    <div class="form-group">
+                        <label class="form-label">Notes to Client</label>
+                        <textarea class="form-textarea update-trigger" id="invNotes" placeholder="Thank you for your business.">Thank you for your business.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Terms & Conditions</label>
+                        <textarea class="form-textarea update-trigger" id="invTerms" placeholder="Payment is due within 14 days.">Payment is due within 14 days. Please make checks payable to Your Company LLC.</textarea>
+                    </div>
                 </div>
             </div>
         </aside>
@@ -267,7 +262,7 @@ export function renderInvoice() {
                     <div class="invoice-items">
                         <table class="items-table">
                             <thead id="previewTableHeader" style="background-color: #6366F1; color: #FFFFFF;">
-                                <tr>
+                                <tr id="previewTableHeaderRow">
                                     <th class="col-desc" id="thDesc">Description</th>
                                     <th class="col-qty" id="thQty">Qty</th>
                                     <th class="col-rate" id="thRate">Rate</th>
@@ -318,6 +313,17 @@ export function renderInvoice() {
                     </div>
                 </div>
             </div>
+            <section class="sidebar-section invoice-pro-tips">
+                <h3 class="sidebar-section__title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    Invoice Pro Tips
+                </h3>
+                <div class="invoice-pro-tips__content">
+                    <p><strong>Faster Payments:</strong> Consider clear, shorter payment terms and make due dates easy to find.</p>
+                    <p><strong>Clear Scope:</strong> Itemize deliverables with specific hours or milestones to reduce misunderstandings.</p>
+                    <p><strong>Late Payments:</strong> State any late-payment terms clearly and ensure they comply with your agreement and local rules.</p>
+                </div>
+            </section>
         </main>
     </div>
     </div>
@@ -392,9 +398,60 @@ window.initInvoicePage = function () {
     }
 
     let currentCurrency = '$';
+    let customColumns = [];
+    let nextCustomColumnId = 1;
+
+    function escapeHTML(value) {
+        return String(value).replace(/[&<>"']/g, character => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        })[character]);
+    }
 
     function formatCurrency(amount) {
         return currentCurrency + amount.toFixed(2);
+    }
+
+    function renderCustomColumnHeaders() {
+        const headerRow = document.getElementById('previewTableHeaderRow');
+        const actionHeader = headerRow?.querySelector('.col-action');
+        if (!headerRow || !actionHeader) return;
+
+        headerRow.closest('.invoice-items')?.classList.toggle('invoice-items--custom-columns', customColumns.length > 0);
+        headerRow.querySelectorAll('[data-custom-column-header]').forEach(header => header.remove());
+        customColumns.forEach(column => {
+            const header = document.createElement('th');
+            header.className = 'custom-item-column';
+            header.dataset.customColumnHeader = column.id;
+            header.textContent = column.title;
+            header.style.backgroundColor = document.getElementById('customHeaderBg').value;
+            header.style.color = document.getElementById('customHeaderColor').value;
+            headerRow.insertBefore(header, actionHeader);
+        });
+    }
+
+    function renderCustomColumnManager() {
+        const list = document.getElementById('invCustomColumnList');
+        if (!list) return;
+        list.replaceChildren();
+
+        customColumns.forEach(column => {
+            const row = document.createElement('div');
+            row.className = 'custom-column-row';
+            const title = document.createElement('input');
+            title.type = 'text';
+            title.className = 'form-input';
+            title.maxLength = 32;
+            title.value = column.title;
+            title.setAttribute('aria-label', 'Custom column heading');
+            title.dataset.customColumnTitle = column.id;
+            const remove = document.createElement('button');
+            remove.type = 'button';
+            remove.className = 'btn btn--ghost btn--sm danger-text';
+            remove.textContent = 'Remove';
+            remove.dataset.removeCustomColumn = column.id;
+            row.append(title, remove);
+            list.append(row);
+        });
     }
 
     function renderItems() {
@@ -411,8 +468,8 @@ window.initInvoicePage = function () {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td class="col-desc">
-                    <input type="text" class="item-input desc-input hide-in-pdf" value="${item.desc}" data-index="${index}" data-field="desc">
-                    <span class="show-in-pdf-only">${item.desc}</span>
+                    <input type="text" class="item-input desc-input hide-in-pdf" value="${escapeHTML(item.desc)}" data-index="${index}" data-field="desc">
+                    <span class="show-in-pdf-only">${escapeHTML(item.desc)}</span>
                 </td>
                 <td class="col-qty">
                     <input type="number" class="item-input qty-input hide-in-pdf" value="${item.qty}" data-index="${index}" data-field="qty" min="0" step="1">
@@ -423,6 +480,10 @@ window.initInvoicePage = function () {
                     <span class="show-in-pdf-only">${item.rate}</span>
                 </td>
                 <td class="col-amt">${formatCurrency(amount)}</td>
+                ${customColumns.map(column => {
+                    const value = item.customFields?.[column.id] || '';
+                    return `<td class="custom-item-column" data-label="${escapeHTML(column.title)}"><input type="text" class="item-input custom-item-input hide-in-pdf" value="${escapeHTML(value)}" data-index="${index}" data-field="custom:${column.id}" aria-label="${escapeHTML(column.title)}"><span class="show-in-pdf-only">${escapeHTML(value)}</span></td>`;
+                }).join('')}
                 <td class="col-action hide-in-pdf">
                     <button class="btn-delete-row" data-index="${index}" title="Delete Row">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -496,6 +557,7 @@ window.initInvoicePage = function () {
         if (thQty) thQty.textContent = document.getElementById('colTitleQty')?.value || 'Qty';
         if (thRate) thRate.textContent = document.getElementById('colTitleRate')?.value || 'Rate';
         if (thAmt) thAmt.textContent = document.getElementById('colTitleAmt')?.value || 'Amount';
+        renderCustomColumnHeaders();
 
         // Notes
         document.getElementById('previewNotes').innerHTML = (document.getElementById('invNotes').value || ' ').replace(/\\n/g, '<br>');
@@ -504,17 +566,70 @@ window.initInvoicePage = function () {
         renderItems();
     }
 
+    document.getElementById('invCustomColumnForm')?.addEventListener('submit', event => {
+        event.preventDefault();
+        const input = document.getElementById('invCustomColumnTitle');
+        const title = input.value.trim();
+        if (!title) {
+            input.focus();
+            return;
+        }
+
+        const column = { id: `custom-${nextCustomColumnId++}`, title };
+        customColumns.push(column);
+        items.forEach(item => {
+            item.customFields = item.customFields || {};
+            item.customFields[column.id] = '';
+        });
+        renderCustomColumnManager();
+        updatePreview();
+        document.getElementById('invCustomColumnTitle').focus();
+    });
+
+    document.getElementById('invCustomColumnList')?.addEventListener('input', event => {
+        const columnId = event.target.dataset.customColumnTitle;
+        if (!columnId) return;
+        const column = customColumns.find(item => item.id === columnId);
+        if (!column) return;
+        column.title = event.target.value;
+        const header = document.querySelector(`[data-custom-column-header="${columnId}"]`);
+        if (header) header.textContent = column.title;
+        document.querySelectorAll(`#previewTableBody [data-field="custom:${columnId}"]`).forEach(input => {
+            input.setAttribute('aria-label', column.title);
+            input.closest('td').dataset.label = column.title;
+        });
+    });
+
+    document.getElementById('invCustomColumnList')?.addEventListener('click', event => {
+        const columnId = event.target.closest('[data-remove-custom-column]')?.dataset.removeCustomColumn;
+        if (!columnId) return;
+        customColumns = customColumns.filter(column => column.id !== columnId);
+        items.forEach(item => { if (item.customFields) delete item.customFields[columnId]; });
+        renderCustomColumnManager();
+        updatePreview();
+    });
+
     // Event Delegation for Table Inputs & Deletes
     document.getElementById('previewTableBody')?.addEventListener('input', (e) => {
         if (e.target.classList.contains('item-input')) {
-            const index = e.target.getAttribute('data-index');
+            const index = Number(e.target.getAttribute('data-index'));
             const field = e.target.getAttribute('data-field');
+            if (field.startsWith('custom:')) {
+                const columnId = field.slice('custom:'.length);
+                items[index].customFields = items[index].customFields || {};
+                items[index].customFields[columnId] = e.target.value;
+                e.target.nextElementSibling.textContent = e.target.value;
+                return;
+            }
             if (field === 'desc') {
                 items[index][field] = e.target.value;
+                e.target.nextElementSibling.textContent = e.target.value;
             } else {
                 items[index][field] = parseFloat(e.target.value) || 0;
+                const subtotal = items.reduce((sum, item) => sum + item.qty * item.rate, 0);
+                e.target.closest('tr').querySelector('.col-amt').textContent = formatCurrency(items[index].qty * items[index].rate);
+                calculateTotals(subtotal);
             }
-            renderItems();
         }
     });
 
@@ -529,7 +644,7 @@ window.initInvoicePage = function () {
 
     // Add Row
     document.getElementById('btnAddRow')?.addEventListener('click', () => {
-        items.push({ desc: 'New Item', qty: 1, rate: 0 });
+        items.push({ desc: 'New Item', qty: 1, rate: 0, customFields: {} });
         renderItems();
     });
 
@@ -638,6 +753,13 @@ window.initInvoicePage = function () {
                 { desc: 'Hosting (1 year)', qty: 1, rate: 120 },
                 { desc: 'Domain Registration', qty: 1, rate: 15 }
             ];
+            customColumns = [];
+            nextCustomColumnId = 1;
+            document.getElementById('invCustomColumnTitle').value = '';
+            renderCustomColumnManager();
+            ['colTitleDesc', 'colTitleQty', 'colTitleRate', 'colTitleAmt'].forEach((id, index) => {
+                document.getElementById(id).value = ['Description', 'Qty', 'Rate', 'Amount'][index];
+            });
 
             // Reset form fields
             document.getElementById('bizName').value = 'Your Company LLC';

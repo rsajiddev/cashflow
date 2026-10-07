@@ -366,14 +366,16 @@ h6 {
 .header__nav {
     display: flex;
     align-items: center;
-    gap: 4px;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-left: auto;
 }
 
 .nav-link {
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 8px 16px;
+    padding: 8px 12px;
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--text-secondary);
@@ -400,7 +402,8 @@ h6 {
 .header__actions {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
+    flex-shrink: 0;
 }
 
 /* Theme Toggle */
@@ -1196,6 +1199,67 @@ h6 {
     color: var(--accent);
 }
 
+.custom-column-tools {
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+}
+
+.custom-column-add {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.custom-column-add .form-input {
+    min-width: 0;
+}
+
+.custom-column-add .btn {
+    flex: 0 0 auto;
+}
+
+.custom-column-list {
+    display: grid;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.custom-column-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 8px;
+}
+
+.custom-column-row .form-input {
+    min-width: 0;
+}
+
+.custom-item-column {
+    min-width: 84px;
+}
+
+.custom-item-column .item-input {
+    width: 100%;
+    min-width: 72px;
+}
+
+.invoice-sidebar-notes,
+.receipt-signature-controls {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+}
+
+.invoice-sidebar-notes .sidebar-section__title,
+.receipt-signature-controls .sidebar-section__title {
+    margin-bottom: 12px;
+}
+
+.invoice-sidebar-notes .form-group:last-child {
+    margin-bottom: 0;
+}
+
 .invoice-preview-area {
     background: var(--bg-secondary);
     border: 1px solid var(--border);
@@ -1222,6 +1286,32 @@ h6 {
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+.invoice-pro-tips {
+    margin: 24px 0 0;
+    border-color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.invoice-pro-tips .sidebar-section__title {
+    color: var(--accent-text);
+}
+
+.invoice-pro-tips .sidebar-section__title svg {
+    color: currentColor;
+}
+
+.invoice-pro-tips__content {
+    display: grid;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: .82rem;
+    line-height: 1.6;
+}
+
+.invoice-pro-tips__content strong {
+    color: var(--text-primary);
 }
 
 /* Invoice Template Styles */
@@ -1296,6 +1386,14 @@ h6 {
 
 .invoice-items {
     padding: 0 32px;
+}
+
+.invoice-items--custom-columns {
+    overflow-x: auto;
+}
+
+.invoice-items--custom-columns table {
+    min-width: 640px;
 }
 
 .invoice-items table {
@@ -3813,6 +3911,16 @@ h6 {
         padding: 2px;
     }
 
+    .invoice-items.invoice-items--custom-columns {
+        overflow-x: auto;
+    }
+
+    .invoice-items.invoice-items--custom-columns table {
+        width: max-content;
+        min-width: 640px;
+        table-layout: auto;
+    }
+
     .invoice-totals .tax-input {
         width: 48px;
         min-width: 0;
@@ -4140,7 +4248,7 @@ h6 {
     grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr);
     gap: 16px;
     align-items: end;
-    margin-bottom: 16px;
+    margin-bottom: 0;
 }
 
 .receipt-colour-control>div {
