@@ -285,7 +285,4 @@ export function initReceiptPage() {
     window.print();
   });
   renderItems();
-  if (importedCalculation && window.CashHub?.showToast) {
-    window.CashHub.showToast(`Imported "${importedCalculation.desc || 'calculated items'}" into receipt. Review the items and totals.`, 'success');
-  }
 }

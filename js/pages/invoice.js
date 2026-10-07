@@ -395,9 +395,6 @@ window.initInvoicePage = function () {
                 if (notesEl) notesEl.value += '\n' + imported.desc;
             }
 
-            if (window.CashHub?.showToast) {
-                window.CashHub.showToast(`Imported "${imported.desc || 'Calculation'}" into invoice!`, 'success');
-            }
         } catch (err) {
             console.error('Error importing calculation:', err);
         }

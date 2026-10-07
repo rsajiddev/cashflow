@@ -1304,9 +1304,6 @@ window.initCalculatorPage = function (type) {
       }
       const storageKey = destination === 'receipt' ? 'cashhub_receipt_import' : 'cashhub_invoice_import';
       sessionStorage.setItem(storageKey, JSON.stringify(currentCalculatedItem));
-      if (window.CashHub?.showToast) {
-        window.CashHub.showToast(`Calculation saved! Opening ${destination === 'receipt' ? 'Receipt' : 'Invoice'} Generator...`, 'success');
-      }
       window.location.hash = destination === 'receipt' ? '#/receipt' : '#/invoice';
     });
   };

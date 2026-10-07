@@ -575,10 +575,10 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
 /* Global page reading progress */
 .scroll-progress {
     position: fixed;
-    top: 16vh;
+    top: 18vh;
     right: 30px;
-    bottom: 16vh;
-    width: 7px;
+    bottom: 18vh;
+    width: 5px;
     overflow: hidden;
     background: color-mix(in srgb, var(--accent) 30%, var(--bg-primary));
     border: 1px solid color-mix(in srgb, var(--accent) 58%, var(--border));
@@ -601,7 +601,9 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
 @media (max-width: 628px) {
     .scroll-progress {
         right: 14px;
-        width: 5px;
+        top: 20vh;
+        bottom: 20vh;
+        width: 4px;
     }
 }
 
@@ -2121,8 +2123,12 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
 .personal-cta__avatar {
     width: 48px;
     height: 48px;
-    border-radius: 50%;
-    color: var(--accent-text);
+    border-radius: 15px;
+    color: #fff;
+    background: linear-gradient(145deg, #3154e8, #4b39d8);
+    border: 0;
+    font-size: 1.65rem;
+    font-weight: 800;
 }
 
 .personal-cta__avatar svg {
@@ -2140,6 +2146,16 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
 .personal-cta__identity strong {
     color: var(--text-primary);
     font-size: .96rem;
+}
+
+.personal-cta__brand-accent {
+    color: #f6b927;
+}
+
+.personal-cta__identity .personal-cta__legal-name {
+    display: inline;
+    color: #60a5fa;
+    font-size: .78em;
 }
 
 .personal-cta__identity small,
@@ -2245,6 +2261,19 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
 .personal-cta__socials svg {
     width: 22px;
     height: 22px;
+}
+
+.personal-cta__credit {
+    align-self: center;
+    margin: 0 0 0 auto;
+    color: var(--text-secondary);
+    font-size: .82rem;
+    text-align: right;
+}
+
+.personal-cta__credit span {
+    padding: 0 .25em;
+    color: var(--accent-text);
 }
 
 /* ========== ANIMATIONS ========== */

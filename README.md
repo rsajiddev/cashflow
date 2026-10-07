@@ -73,6 +73,17 @@ Then open [http://localhost:5500](http://localhost:5500). Opening `index.html` d
 - The contact form prepares an email through the visitor’s email application; it does not submit to a CashHub server.
 - Inter, html2pdf.js, and guide photography are loaded from external providers (Google Fonts, cdnjs, and Unsplash). Their availability depends on the browser’s network access.
 
+## Recent interface and workflow updates
+
+- Calculator detail pages include a calculator-specific hero, explanatory content, usage guidance, helpful tips, and a calculator form. The tips panel follows the page while scrolling on wider screens and returns to the normal document flow on smaller screens.
+- Only calculators that produce invoice-related money values expose invoice/receipt import actions. Imports carry supported line-item, tax, and discount values into the selected generator.
+- Blog detail pages provide a generated, in-page table of contents and collapsible FAQ sections. Article detail and calculator detail pages share a consistent hero-to-content layout.
+- Navigation uses a transparent treatment at the top of the page and gains its glass-style surface after scrolling. The shared scroll-progress indicator is inset from the viewport edge.
+- Shared contact calls to action use the same content-container width and horizontal gutters as neighboring page sections, including on the home page, blog index and detail pages, and calculator detail pages.
+- Invoice and receipt tax/discount controls live with their document details while the generated preview displays the resulting amounts. Logo uploads support PNG, JPEG, and WebP up to 600 KB.
+- Invoice and receipt PDF exports target the document preview rather than printing the editor interface; a browser print / Save as PDF fallback is available if the PDF library cannot load.
+- Home, blog, calculator, invoice, and receipt layouts include responsive behavior for narrower screens, along with light/dark theme support and reduced-motion accommodations.
+
 ## Checks
 
 There is currently no full automated browser or unit-test suite. `test_modules.mjs` is a small import smoke check; some page modules expect browser globals such as `window`, so importing them in plain Node.js is not a complete test of the application. A syntax-only check for the JavaScript files can be run with:
@@ -82,6 +93,4 @@ for file in js/app.js js/data/*.js js/pages/*.js; do
   node --check "$file" || exit 1
 done
 ```
-
-
 For functional verification, run the local server and exercise the routes and document exports in a browser.

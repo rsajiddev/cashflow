@@ -169,7 +169,8 @@ async function navigateTo(path) {
                 break;
         }
 
-        if (page !== 'contact' && page !== '' && page !== 'home') {
+        // Home renders the shared CTA inside its own page template; append it to every other route.
+        if (page !== '' && page !== 'home') {
             html += renderPersonalCta();
         }
 
