@@ -93,6 +93,7 @@ async function navigateTo(path) {
     const mainContent = document.getElementById('mainContent');
     const parts = parseRoute(path);
     const page = parts[0] || 'home';
+    document.body.classList.toggle('detail-hero-page', page === 'calculator' || (page === 'blog' && Boolean(parts[1])));
 
     // Update active nav links
     updateActiveNav(page);
@@ -252,19 +253,22 @@ function initHeroWord(root = document) {
 }
 
 function initFaq(root = document) {
-    root.querySelectorAll('.faq-list details').forEach(details => {
+    root.querySelectorAll('.faq-list details, .blog-faq details').forEach(details => {
         const summary = details.querySelector('summary');
         if (!summary || summary.dataset.bound === 'true') return;
         summary.dataset.bound = 'true';
+        summary.setAttribute('aria-expanded', details.open ? 'true' : 'false');
         summary.addEventListener('click', event => {
             event.preventDefault();
             const opening = !details.classList.contains('is-open');
             if (opening) {
                 details.open = true;
+                summary.setAttribute('aria-expanded', 'true');
                 requestAnimationFrame(() => details.classList.add('is-open'));
             } else {
                 details.classList.remove('is-open');
-                window.setTimeout(() => { details.open = false; }, 260);
+                summary.setAttribute('aria-expanded', 'false');
+                window.setTimeout(() => { details.open = false; }, 300);
             }
         });
     });

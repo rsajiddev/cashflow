@@ -437,7 +437,7 @@ export function renderBlogPost(slug) {
         <main class="blog-post__body">
           <div class="blog-post__content">${articleContent}
           <section class="blog-faq"><span class="section-label">Quick answers</span><h2 id="${faqSectionId}">Frequently asked questions</h2>
-            ${metadata.faq.map(([question, answer]) => `<details><summary>${question}</summary><p>${answer}</p></details>`).join('')}
+            ${metadata.faq.map(([question, answer]) => `<details><summary>${question}</summary><div class="blog-faq__answer"><div><p>${answer}</p></div></div></details>`).join('')}
           </section>
           </div>
         </main>

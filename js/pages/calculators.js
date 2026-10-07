@@ -119,6 +119,50 @@ export function renderCalculatorsHub() {
   `;
 }
 
+const calculatorGuidance = {
+  'invoice-due-date': ['Payment deadline planning', 'Use an invoice date and payment terms to find a due date. Confirm the agreed terms with your client before issuing the invoice.'],
+  'business-days': ['Working-day scheduling', 'Add or subtract weekdays from a start date, or count weekdays between dates. Weekends are excluded; public holidays are not currently considered.'],
+  'late-payment-fee': ['Overdue charge estimate', 'Estimate a flat or percentage fee from an overdue balance. Check your contract and local rules before applying a fee.'],
+  'late-payment-interest': ['Interest on overdue balances', 'Enter the unpaid amount, annual rate, and overdue days to estimate simple daily interest.'],
+  'days-past-due': ['Accounts-receivable aging', 'Compare a due date with today to find overdue days and a standard aging bucket.'],
+  'sales-tax': ['Sales tax estimate', 'Add a rate to a net price or extract the tax portion from a tax-inclusive total. Rates and tax obligations vary by location.'],
+  'vat': ['VAT estimate', 'Calculate VAT on a net price or separate VAT from a VAT-inclusive amount using the rate that applies to your transaction.'],
+  'gst': ['GST estimate', 'Calculate GST on a net amount or extract it from a GST-inclusive amount. Check the appropriate rate for your jurisdiction.'],
+  'invoice-discount': ['Invoice discount planning', 'Compare a percentage or fixed discount and optionally include tax after the discount. The resulting discount can be imported with the line item.'],
+  'early-payment-discount': ['Early-payment terms', 'Estimate savings for terms such as 2/10 Net 30 and compare the early amount with the standard invoice amount.'],
+  'invoice-calc': ['Itemized invoice totals', 'Enter line items, quantities, rates, tax, discounts, and payments to calculate the total and balance due.'],
+  'hourly-invoice': ['Hourly service pricing', 'Combine billable hours and rates with expenses, tax, discount, and a deposit to estimate the amount to bill.'],
+  'contractor-invoice': ['Contractor job pricing', 'Build an estimate from labor, materials, other costs, markup, and tax. Review each component before importing.'],
+  'project-invoice': ['Project and milestone billing', 'Combine a fixed project price and expenses with discount, tax, and deposit details.'],
+  markup: ['Cost-plus pricing', 'Apply a markup to cost to calculate a selling price and estimated profit. Markup is calculated on cost, not selling price.'],
+  margin: ['Gross margin pricing', 'Calculate the price needed for a target margin, or evaluate margin and markup from a known cost and selling price.']
+};
+
+const calculatorTips = {
+  'invoice-due-date': ['Use the payment terms agreed with the customer.', 'Check the resulting date against weekends, holidays, and any contract-specific rules.'],
+  'business-days': ['This tool excludes Saturdays and Sundays.', 'Public holidays are not automatically removed from the result.'],
+  'late-payment-fee': ['Choose the fee method that matches your agreement.', 'Verify that the fee is permitted before adding it to a customer balance.'],
+  'late-payment-interest': ['Use the outstanding principal and the agreed annual rate.', 'This estimate uses simple daily interest; actual agreements may calculate differently.'],
+  'days-past-due': ['Use the contractual due date, not the invoice issue date.', 'Confirm the date and timezone convention before taking collection action.'],
+  'sales-tax': ['Enter the rate applicable to this transaction and location.', 'The result is an estimate, not a determination of tax liability.'],
+  vat: ['Use the rate and inclusive/exclusive mode that applies to the sale.', 'VAT rules can vary by jurisdiction, goods, and customer type.'],
+  gst: ['Confirm the correct GST rate before using the result.', 'The calculator does not determine whether a supply is taxable.'],
+  'invoice-discount': ['Confirm whether the discount is a percentage or a fixed amount.', 'Check whether tax is calculated before or after the discount in your jurisdiction.'],
+  'early-payment-discount': ['Make the discount deadline and net deadline clear on the invoice.', 'The annualized comparison is an estimate for evaluating payment terms.'],
+  'invoice-calc': ['Enter each billable line once and verify quantities and rates.', 'Record payments separately from discounts so the balance remains clear.'],
+  'hourly-invoice': ['Keep hours, hourly rate, and reimbursable expenses distinct.', 'Check whether tax applies to expenses in your jurisdiction.'],
+  'contractor-invoice': ['Separate labor, materials, and other job costs.', 'Apply markup consistently and confirm the tax treatment of each component.'],
+  'project-invoice': ['Separate the agreed project fee from pass-through expenses.', 'Make deposits and milestone/payment terms explicit in the final document.'],
+  markup: ['Markup is based on cost; it is different from gross margin.', 'Include overhead and other costs when deciding whether the price is sustainable.'],
+  margin: ['Margin uses selling price as its base; markup uses cost.', 'A target margin of 100% or more cannot produce a finite positive selling price.']
+};
+
+const documentImportCalculators = new Set([
+  'late-payment-fee', 'late-payment-interest', 'sales-tax', 'vat', 'gst',
+  'invoice-discount', 'early-payment-discount', 'invoice-calc', 'hourly-invoice',
+  'contractor-invoice', 'project-invoice', 'markup', 'margin'
+]);
+
 export function renderCalculator(type) {
   let content = '';
 
@@ -639,21 +683,55 @@ export function renderCalculator(type) {
       content = `<div class="calc-form-header"><h1>Calculator not found</h1></div>`;
   }
 
+  const guidance = calculatorGuidance[type];
+  const tips = calculatorTips[type] || [];
+  const canImport = documentImportCalculators.has(type);
+  const heading = content.match(/<h1>(.*?)<\/h1>\s*<p>(.*?)<\/p>/s);
+  const title = heading?.[1] || 'Business Calculator';
+  const description = heading?.[2] || 'Enter your values to calculate a result.';
+  const formContent = content.replace(/<div class="calc-form-header">[\s\S]*?<\/div>/, '');
+
   return `
-    <section class="section calculator-page">
-      <div class="container">
-        <a href="#/calculators" class="blog-post__back">← Back to Calculators</a>
-        <div class="calc-form-card">
-          ${content}
-          <div style="margin-top:28px; padding:20px; background:var(--bg-tertiary); border:1px dashed var(--accent); border-radius:var(--radius-lg); text-align:center;">
-             <p style="font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-bottom:6px;">Ready to Bill This Amount?</p>
-             <p style="font-size:0.84rem; color:var(--text-secondary); margin-bottom:14px;">Transfer this calculated amount directly into your invoice as a line item with one click:</p>
-             <button type="button" id="btnConvertToInvoice" class="btn btn--primary calc-convert-btn" style="display:inline-flex; align-items:center; gap:8px;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                Convert Calculated Amount to Invoice →
-             </button>
-          </div>
+    <section class="section calculator-page calculator-detail-page">
+      <header class="blog-post__hero calculator-detail__hero">
+        <div class="blog-post__hero-shade"></div>
+        <div class="blog-post__hero-content">
+          <a href="#/calculators" class="blog-post__back">← Back to Calculators</a>
+          <span class="section-label calculator-detail__eyebrow">${guidance?.[0] || 'CashHub calculator'}</span>
+          <h1 class="blog-post__title">${title}</h1>
+          <p class="blog-post__hero-description">${description}</p>
         </div>
+        <span class="calculator-detail__decoration calculator-detail__decoration--one" aria-hidden="true">＋</span>
+        <span class="calculator-detail__decoration calculator-detail__decoration--two" aria-hidden="true">◇</span>
+        <span class="calculator-detail__decoration calculator-detail__decoration--three" aria-hidden="true">∑</span>
+        <span class="calculator-detail__decoration calculator-detail__decoration--four" aria-hidden="true">%</span>
+        <span class="calculator-detail__decoration calculator-detail__decoration--five" aria-hidden="true">÷</span>
+        <span class="calculator-detail__decoration calculator-detail__decoration--six" aria-hidden="true">×</span>
+      </header>
+      <div class="container">
+        <div class="calculator-detail__layout">
+          <aside class="calculator-detail__sidebar" aria-label="Calculator details and tips">
+            <section class="calculator-detail__info-card">
+              <span class="section-label">About this tool</span>
+              <h2>${guidance?.[0] || 'Calculator details'}</h2>
+              <p>${guidance?.[1] || description}</p>
+            </section>
+            <section class="calculator-detail__tips-card">
+              <span class="section-label">Helpful tips</span>
+              <ul>${tips.map(tip => `<li>${tip}</li>`).join('') || `<li>${description}</li>`}</ul>
+              <p class="calculator-guide-card__import-note">${canImport ? 'Calculated money values can be imported to either an invoice or receipt.' : 'Date and scheduling results are informational and are not imported as document line items.'}</p>
+            </section>
+          </aside>
+          <main class="calc-form-card calculator-detail__calculator">
+          ${formContent}
+          ${canImport ? `<div class="calc-import-actions">
+             <p class="calc-import-actions__title">Use this result in a document</p>
+             <p>After calculating, import the generated billing item and its tax or discount values into an editor:</p>
+             <div class="calc-import-actions__buttons"><button type="button" id="btnConvertToInvoice" class="btn btn--primary calc-convert-btn">Import to Invoice</button><button type="button" id="btnConvertToReceipt" class="btn btn--secondary calc-convert-btn">Import to Receipt</button></div>
+          </div>` : ''}
+          </main>
+        </div>
+        <section class="calculator-guide-card"><span class="section-label">Step by step</span><h2>How to use this calculator</h2><div class="calculator-guide-card__steps"><div><strong>1</strong><span>Enter the values requested in the calculator.</span></div><div><strong>2</strong><span>Select any calculation options, then choose <b>Calculate</b>.</span></div><div><strong>3</strong><span>Review the breakdown and confirm your assumptions before using the result.</span></div></div></section>
       </div>
     </section>
   `;
@@ -1210,9 +1288,10 @@ window.initCalculatorPage = function (type) {
     displayResult(resHtml);
   });
 
-  // Convert to Invoice Click Handler
-  const convertBtn = document.getElementById('btnConvertToInvoice');
-  if (convertBtn) {
+  // Import only financial/tax results into either document editor.
+  const bindImportButton = (buttonId, destination) => {
+    const convertBtn = document.getElementById(buttonId);
+    if (!convertBtn) return;
     convertBtn.addEventListener('click', (e) => {
       e.preventDefault();
       if (!currentCalculatedItem) {
@@ -1223,11 +1302,14 @@ window.initCalculatorPage = function (type) {
         }
         return;
       }
-      sessionStorage.setItem('cashhub_invoice_import', JSON.stringify(currentCalculatedItem));
+      const storageKey = destination === 'receipt' ? 'cashhub_receipt_import' : 'cashhub_invoice_import';
+      sessionStorage.setItem(storageKey, JSON.stringify(currentCalculatedItem));
       if (window.CashHub?.showToast) {
-        window.CashHub.showToast('Calculation saved! Opening Invoice Generator...', 'success');
+        window.CashHub.showToast(`Calculation saved! Opening ${destination === 'receipt' ? 'Receipt' : 'Invoice'} Generator...`, 'success');
       }
-      window.location.hash = '#/invoice';
+      window.location.hash = destination === 'receipt' ? '#/receipt' : '#/invoice';
     });
-  }
+  };
+  bindImportButton('btnConvertToInvoice', 'invoice');
+  bindImportButton('btnConvertToReceipt', 'receipt');
 };

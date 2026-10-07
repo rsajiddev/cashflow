@@ -354,11 +354,11 @@ window.initInvoicePage = function () {
             sessionStorage.removeItem('cashhub_invoice_import');
 
             if (imported.type === 'item') {
-                items.push({
+                items = [{
                     desc: imported.desc || 'Calculated Service',
                     qty: imported.qty || 1,
                     rate: imported.rate || 0
-                });
+                }];
                 if (imported.taxRate !== undefined && imported.taxRate > 0) {
                     const taxEl = document.getElementById('taxInput');
                     if (taxEl) taxEl.value = imported.taxRate;

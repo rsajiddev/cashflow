@@ -43,6 +43,31 @@ export function initReceiptPage() {
   const preview = $('receiptPreview');
   const format = value => `${$('recCurrency').value}${Number(value || 0).toFixed(2)}`;
   const validHex = value => /^#[0-9a-fA-F]{6}$/.test(value);
+  const importedCalculationRaw = sessionStorage.getItem('cashhub_receipt_import');
+  let importedCalculation = null;
+  if (importedCalculationRaw) {
+    try {
+      importedCalculation = JSON.parse(importedCalculationRaw);
+      sessionStorage.removeItem('cashhub_receipt_import');
+      const importedItems = importedCalculation.type === 'multi' && Array.isArray(importedCalculation.items)
+        ? importedCalculation.items
+        : importedCalculation.type === 'item' ? [importedCalculation] : [];
+      if (importedItems.length) {
+        items = importedItems.map(item => ({
+          desc: item.desc || 'Calculated item',
+          qty: Number(item.qty) || 1,
+          price: Number(item.price ?? item.rate) || 0,
+          customFields: {}
+        }));
+      }
+      if (importedCalculation.taxRate !== undefined) $('recTax').value = Number(importedCalculation.taxRate) || 0;
+      if (importedCalculation.discount !== undefined) $('recDiscount').value = Number(importedCalculation.discount) || 0;
+      if (importedCalculation.note) $('recNotes').value = `${$('recNotes').value}\n${importedCalculation.note}`;
+    } catch (error) {
+      console.error('Could not import calculator result into receipt:', error);
+      sessionStorage.removeItem('cashhub_receipt_import');
+    }
+  }
   const escapeHTML = value => String(value).replace(/[&<>"']/g, character => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   })[character]);
@@ -260,4 +285,7 @@ export function initReceiptPage() {
     window.print();
   });
   renderItems();
+  if (importedCalculation && window.CashHub?.showToast) {
+    window.CashHub.showToast(`Imported "${importedCalculation.desc || 'calculated items'}" into receipt. Review the items and totals.`, 'success');
+  }
 }
