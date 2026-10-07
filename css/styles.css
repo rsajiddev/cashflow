@@ -340,10 +340,10 @@ h6 {
     height: calc(100% - 12px);
     gap: 32px;
     padding: 0 18px;
-    border: 1px solid var(--border);
+    border: 1px solid transparent;
     border-radius: 16px;
-    background: var(--bg-secondary);
-    box-shadow: var(--shadow-sm);
+    background: transparent;
+    box-shadow: none;
     transition: height var(--transition-base), border-color var(--transition-base), background-color var(--transition-base), box-shadow var(--transition-base), backdrop-filter var(--transition-base);
 }
 
@@ -357,12 +357,6 @@ h6 {
 }
 
 /* Detail-page heroes continue behind the unchanged floating navbar. */
-body.detail-hero-page .header:not(.scrolled) .header__inner {
-    background: transparent;
-    border-color: transparent;
-    box-shadow: none;
-}
-
 body.detail-hero-page #mainContent > .blog-post,
 body.detail-hero-page #mainContent > .calculator-detail-page {
     margin-top: calc(var(--header-height) * -1);
@@ -371,6 +365,38 @@ body.detail-hero-page #mainContent > .calculator-detail-page {
 body.detail-hero-page #mainContent > .blog-post > .blog-post__hero,
 body.detail-hero-page .calculator-detail__hero {
     padding-top: calc(32px + var(--header-height));
+}
+
+/* Keep the transparent navbar legible over the dark editorial/calculator heroes. */
+body.detail-hero-page .header:not(.scrolled) .logo-text,
+body.detail-hero-page .header:not(.scrolled) .nav-link,
+body.detail-hero-page .header:not(.scrolled) .nav-link:hover,
+body.detail-hero-page .header:not(.scrolled) .nav-link.active {
+    color: #fff;
+}
+
+body.detail-hero-page .header:not(.scrolled) .logo-highlight {
+    color: #b8c2ff;
+}
+
+body.detail-hero-page .header:not(.scrolled) .nav-link:hover,
+body.detail-hero-page .header:not(.scrolled) .nav-link.active {
+    background: rgba(255, 255, 255, .14);
+}
+
+body.detail-hero-page .header:not(.scrolled) .theme-toggle {
+    color: #fff;
+    border-color: rgba(255, 255, 255, .48);
+    background: rgba(255, 255, 255, .12);
+}
+
+body.detail-hero-page .header:not(.scrolled) .mobile-menu-toggle {
+    border-color: rgba(255, 255, 255, .4);
+    background: rgba(255, 255, 255, .12);
+}
+
+body.detail-hero-page .header:not(.scrolled) .hamburger-line {
+    background: #fff;
 }
 
 .header__logo {
@@ -5259,8 +5285,21 @@ body.detail-hero-page .calculator-detail__hero {
     }
 }
 
-/* Keep the detail-page contact CTA visually attached to the last content card. */
+/* Keep the detail-page contact CTA consistently spaced from its final content card. */
+body.detail-hero-page #mainContent > .blog-post,
+body.detail-hero-page #mainContent > .calculator-detail-page {
+    padding-bottom: 0;
+}
+
+body.detail-hero-page .calculator-detail-page .calculator-guide-card {
+    margin-bottom: 0;
+}
+
 body.detail-hero-page #mainContent > .personal-cta-section {
+    padding-top: 24px;
+}
+
+body.detail-hero-page #mainContent > .calculator-detail-page + .personal-cta-section {
     padding-top: 8px;
 }
 
