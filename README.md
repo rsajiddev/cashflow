@@ -88,9 +88,9 @@ Then open [http://localhost:5500](http://localhost:5500). Opening `index.html` d
 
 There is currently no full automated browser or unit-test suite. `test_modules.mjs` is a small import smoke check; some page modules expect browser globals such as `window`, so importing them in plain Node.js is not a complete test of the application. A syntax-only check for the JavaScript files can be run with:
 
-```sh
+
 for file in js/app.js js/data/*.js js/pages/*.js; do
   node --check "$file" || exit 1
 done
-```
+
 For functional verification, run the local server and exercise the routes and document exports in a browser.
