@@ -32,7 +32,7 @@ export default function Footer() {
             <h4 className="footer__heading">Resources</h4>
             <Link href="/blog" className="footer__link">Blog</Link>
             <Link href="/blog/days-sales-outstanding" className="footer__link">DSO Guide</Link>
-            <Link href="/blog/tax-tips" className="footer__link">Tax Tips</Link>
+            <Link href="/blog/accounts-receivable-turnover" className="footer__link">AR Turnover Guide</Link>
           </div>
 
           <div className="footer__col">

@@ -2080,6 +2080,12 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
     padding-top: 36px;
 }
 
+.personal-cta-section > .container {
+    max-width: var(--container-max);
+    width: 100%;
+    padding: 0 var(--container-padding);
+}
+
 #mainContent>.home-container>.home-faq,
 #mainContent>.blog-page {
     padding-bottom: 0;
@@ -2254,7 +2260,7 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 13px 24px;
+    padding: 13px 28px;
     border-radius: 12px;
     background: #ffffff;
     color: #4338ca;
@@ -2263,6 +2269,7 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
     text-decoration: none;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
     transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+    min-width: 220px;
 }
 
 .personal-cta__btn-primary:hover {
@@ -2276,7 +2283,7 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 12px 22px;
+    padding: 13px 28px;
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.12);
     color: #ffffff;
@@ -2286,6 +2293,7 @@ body.detail-hero-page .header:not(.scrolled) .hamburger-line {
     text-decoration: none;
     backdrop-filter: blur(10px);
     transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    min-width: 220px;
 }
 
 .personal-cta__btn-secondary:hover {
@@ -5708,44 +5716,7 @@ body.detail-hero-page .calculator-detail-page .calculator-guide-card {
 
 /* Match the CTA's outer edges to the content width used on each route.
    The generic .container max-width (1200px) was narrower than every target section. */
-body.route-home .home-container>.personal-cta-section>.container {
-    width: min(100% - 48px, 1240px);
-    max-width: none;
-    padding: 0;
-}
-
-body.route-blog-index #mainContent>.personal-cta-section>.container {
-    width: min(calc(100% - var(--container-padding) - var(--container-padding)),
-            calc(1320px - var(--container-padding) - var(--container-padding)));
-    max-width: none;
-    padding: 0;
-}
-
-body.route-blog-detail #mainContent>.personal-cta-section>.container,
-body.route-calculator-detail #mainContent>.personal-cta-section>.container {
-    width: min(100% - 48px, 1280px);
-    max-width: none;
-    padding: 0;
-}
-
-body.route-calculator-detail #mainContent>.personal-cta-section>.container {
-    width: min(calc(100% - 48px - var(--container-padding) - var(--container-padding)),
-            calc(1280px - var(--container-padding) - var(--container-padding)));
-}
-
-@media (max-width: 628px) {
-
-    body.route-home .home-container>.personal-cta-section>.container,
-    body.route-blog-detail #mainContent>.personal-cta-section>.container {
-        width: calc(100% - 32px);
-    }
-}
-
-@media (max-width: 620px) {
-    body.route-calculator-detail #mainContent>.personal-cta-section>.container {
-        width: calc(100% - 32px - var(--container-padding) - var(--container-padding));
-    }
-}
+/* CTA container now inherits the standard .container width defined above */
 
 @media (prefers-reduced-motion: reduce) {
 
