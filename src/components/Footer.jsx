@@ -50,7 +50,7 @@ export default function Footer() {
             <Link href="/terms" className="footer__link">Terms &amp; Conditions</Link>
             <Link href="/privacy" className="footer__link">Privacy Policy</Link>
           </div>
-          <span className="footer__made-with">A Project of <a className="footer__made-with_company" href="https://techsgstudio.com/" target="_blank" rel="noopener noreferrer">Tech SG Studio</a></span>
+          <span className="footer__made-with">Made with ❤️ by Professionals</span>
         </div>
       </div>
     </footer>
